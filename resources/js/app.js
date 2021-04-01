@@ -9,6 +9,14 @@ Vue.mixin({ methods: { route } });
 Vue.use(InertiaPlugin);
 Vue.use(PortalVue);
 
+Vue.mixin({
+    methods: {
+        friendlyTime: function (time) {
+            return (new Date(`January 1, 2021 ${time}`)).toLocaleTimeString('en-US');
+        }
+    }
+})
+
 const app = document.getElementById('app');
 
 new Vue({

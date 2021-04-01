@@ -15,8 +15,23 @@ class CourseSection extends Model
         'details',
     ];
 
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function catalog()
+    {
+        return $this->belongsTo(Catalog::class, 'term_id');
+    }
+
     public function schedule()
     {
         return $this->hasMany(CourseSectionSchedule::class);
+    }
+
+    public function registrations()
+    {
+        return $this->hasMany(StudentRegistration::class);
     }
 }

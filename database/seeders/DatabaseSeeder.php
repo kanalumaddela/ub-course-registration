@@ -20,8 +20,9 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             CourseSeeder::class,
             CourseSectionSeeder::class,
-            TermSeeder::class,
+            CatalogSeeder::class,
             RolesPermissionsSeeder::class,
+            StudentSeeder::class
         ]);
 
         User::create([

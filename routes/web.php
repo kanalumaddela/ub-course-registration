@@ -24,13 +24,48 @@ Route::get('/', function () {
     ]);
 });
 
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
+// new dashboard
+Route::get('/new', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
+
+// all courses
+Route::get('/search', \App\Http\Controllers\SearchController::class)->name('search');
+
+
+// catalog
+Route::get('/catalogs', [\App\Http\Controllers\CatalogController::class, 'index'])->name('catalogs.index');
+Route::get('/catalogs/{catalog}', [\App\Http\Controllers\CatalogController::class, 'view'])->name('catalogs.view');
+
+
+
+
+
+
+
+
+
+
+
+
 Route::group(['prefix' => '/test'], function () {
+    Route::get('/departments', function () {
+        $departments = \App\Models\Department::withCount('courses')->orderBy('name', 'asc')->paginate(20);
+
+//        dd($departments[0]['courses_count']);
+
+        return Inertia::render('Test/Departments', [
+            'departments' => $departments
+        ]);
+    })->name('test.departments');
+
     Route::get('/courses', function () {
-        $courses = \App\Models\Course::paginate(20);
+        $courses = \App\Models\Course::orderBy('name', 'asc')->paginate(18);
+
+//        dd($courses);
 
         return Inertia::render('Test/Courses', [
             'courses' => $courses

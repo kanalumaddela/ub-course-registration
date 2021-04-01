@@ -16,4 +16,8 @@ class CourseSectionSchedule extends Model
         'duration',
         'location',
     ];
+
+    protected $casts = [
+        'days' => 'array'
+    ];
 }
