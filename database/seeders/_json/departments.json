@@ -1,156 +1,772 @@
 [
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(3, 'Acup Botanical Medicine', 'ABM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(2, 'Acup Basic Science', 'ABS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(30, 'Chinese Herbal Clinic', 'ACC', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(1, 'Accounting', 'ACCT', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(16, 'Asian\/Chinese Herbology', 'ACH', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(4, 'Acup Clinical Services', 'ACS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(10, 'Administration', 'ADMIN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(15, 'Art & Design', 'ADSN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(5, 'Acup Herbal Med Thry', 'AHM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(109, 'Movemnt & Respiratn Stds', 'AMR', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(11, 'Anatomy', 'AN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(6, 'Acup Nutrition', 'ANT', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(12, 'Applied Music', 'APM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(8, 'Acup Principles & Practice', 'APP', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(9, 'Acup Psyc', 'APS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(7, 'Acup Pract & Tech', 'APT', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(13, 'Arabic', 'ARAB', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(14, 'Arabic Language', 'ARABC', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(120, 'Oriental Thry,Diagn & Appl', 'ATD', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(153, 'Western Biomedicine', 'AWB', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(23, 'Business Analytics & Intellige', 'BAI', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(18, 'Biochemistry- Chiropractic', 'BC', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(19, 'Biology', 'BIOL', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(25, 'Business Law', 'BLAW', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(20, 'Biomedical Engineering', 'BMEG', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(26, 'Business Procedures- Chiroprac', 'BP', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(22, 'Business Administration', 'BUAD', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(24, 'Business Capstone', 'BUCP', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(43, 'Comp Application\/Info Sytems', 'CAIS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(27, 'Capstone', 'CAPS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(42, 'Cntr Busn Info Tech Program', 'CBIT', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(31, 'Chiro Skills & Technique', 'CH', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(28, 'Chemistry', 'CHEM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(29, 'Chinese', 'CHIN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(34, 'Cinema History and Theory', 'CIHT', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(33, 'Cinema', 'CINE', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(48, 'Criminal Justice', 'CJHS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(40, 'Clinical Services', 'CL', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(37, 'Clinical Nutrition- Chiroprac', 'CN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(46, 'Counseling', 'COUN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(44, 'Computer Engineering', 'CPEG', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(47, 'Cptr Engr Technology', 'CPET', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(45, 'Computer Science', 'CPSC', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(122, 'Phd Comp Sci & Engr', 'CPSE', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(41, 'Clinical Services- Chiroprac', 'CS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(52, 'Differential Diagnosis', 'DD', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(49, 'Dental Hygiene', 'DHYG', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(138, 'Radiology', 'DI', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(53, 'Digitial Marketing Comm', 'DMCM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(50, 'Design Management', 'DSNMG', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(51, 'Diagnosis', 'DX', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(54, 'East Asian & Pacific Rim Stud', 'EAPRS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(55, 'Economics', 'ECON', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(58, 'Educational Leadership', 'EDLD', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(57, 'Education Mod Map', 'EDMM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(56, 'Education', 'EDUC', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(59, 'Electrical Engineering', 'ELEG', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(64, 'English Lang Institute', 'ELI', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(63, 'English', 'ENGL', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(61, 'Engineering', 'ENGR', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(60, 'Emergency Procedures', 'ER', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(62, 'Engl As Second Lang', 'ESL', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(67, 'Fine Arts', 'FA', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(66, 'Finance', 'FIN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(65, 'Fashion Merchandising', 'FM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(70, 'Free Elec', 'FREE', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(71, 'French', 'FREN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(68, 'First Year Experience', 'FYE', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(69, 'First Year Seminar', 'FYS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(77, 'Graphic Design', 'GDSN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(73, 'Geology', 'GEOL', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(74, 'Gerontology', 'GERO', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(76, 'Global Development & Peace', 'GLDP', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(75, 'Global Communication', 'GMCS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(72, 'General Studies', 'GNST', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(80, 'History', 'HIST', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(79, 'Healthcare Administration', 'HLAD', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(82, 'Honors Program', 'HONR', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(83, 'Human Resource Administration', 'HRAD', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(78, 'Health Science', 'HSCI', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(85, 'Humanities', 'HUM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(84, 'Human Services', 'HUSV', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(87, 'Industrial Design', 'IDDSN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(86, 'Illustration', 'ILLUS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(91, 'International Business', 'INTLBU', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(89, 'Integrated Studies', 'INTST', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(92, 'Intl Pol Econ & Diplomacy', 'IPED', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(90, 'Interior Design', 'ITDSN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(88, 'Information Tech Mgmt', 'ITKM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(93, 'Japanese', 'JAPN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(94, 'Korean', 'KORN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(108, 'Modern Language', 'LANG', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(96, 'Liberal Arts Topics', 'LART', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(95, 'Liberal Arts Electv', 'LIBARTS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(101, 'Martial Arts', 'MARTS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(104, 'Mathematics', 'MATH', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(107, 'Microbiology and Public Health', 'MB', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(102, 'Mass Communications', 'MCOM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(105, 'Mechanical Engineering', 'MEEG', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(99, 'Management Engineering', 'MGEG', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(98, 'Management & Ind Relations', 'MGMT', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(100, 'Marketing', 'MKTG', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(106, 'Medical Laboratory Sciences', 'MLSC', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(103, 'Master of Public Health', 'MPH', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(111, 'Music Education', 'MSED', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(97, 'M.S. Physician Assistant', 'MSPA', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(110, 'Music', 'MUSC', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(21, 'Botanical Medicine', 'NBM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(17, 'Basic Studies', 'NBS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(35, 'Clinical Education', 'NCE', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(39, 'Clinical Sciences', 'NCS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(81, 'Homeopathic Medicine', 'NHM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(132, 'Practice Organ Systems', 'NNP', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(36, 'Clinical Nutrition', 'NNT', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(114, 'Naturopathic Obstetrics', 'NOB', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(119, 'Oriental Medicine', 'NOM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(124, 'Physical Medicine', 'NPM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(134, 'Principles and Practices', 'NPP', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(113, 'Naturopathic Med Psychology', 'NPS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(139, 'Research', 'NRS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(115, 'Neuroscience', 'NS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(112, 'Nat Trad Chinese Medicine', 'NTCM', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(116, 'Nursing', 'NURS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(117, 'Nutrition', 'NUTR', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(118, 'Organizational Leadership', 'ORLD', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(121, 'Pathology', 'PA', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(135, 'Prof Devel Engineering', 'PDEN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(130, 'Post-Graduate Chiro', 'PG', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(129, 'Post Graduate Chiropractic', 'PGCH', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(131, 'Post-Graduate Dental Hyg', 'PGDH', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(127, 'Physiology- Chiropractic', 'PH', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(123, 'Philosophy', 'PHIL', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(125, 'Physics', 'PHYS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(133, 'Principles and Practice- Chiro', 'PP', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(136, 'Professional Studies', 'PRST', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(38, 'Clinical Psychology- Chiro', 'PS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(128, 'Political Science', 'PSCI', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(137, 'Psychology', 'PSYC', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(126, 'Physiological Therapeutics', 'PT', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(141, 'Retailing', 'RETL', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(140, 'Research- Chiropractic', 'RS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(142, 'Russian', 'RUS', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(143, 'Science', 'SCI', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(145, 'Sociology', 'SOC', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(144, 'Social Sciences', 'SOSC', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(146, 'Spanish', 'SPAN', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(147, 'Sports Management', 'SPMT', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(148, 'Statistics', 'STAT', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(150, 'Technology Management', 'TCMG', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(32, 'Chiropractic Skills\/Technique', 'TE', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(149, 'Technology Elective', 'TECH', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(152, 'Theatre', 'THA', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(151, 'Technology Management Phd', 'TMPD', '2021-03-22 09:10:09');",
-    "insert into `departments` (`id`, `name`, `prefix`, `created_at`) VALUES(154, 'World Religions', 'WREL', '2021-03-22 09:10:09');"
+    {
+        "id": 1,
+        "name": "Accounting",
+        "prefix": "ACCT"
+    },
+    {
+        "id": 2,
+        "name": "Acup Basic Science",
+        "prefix": "ABS"
+    },
+    {
+        "id": 3,
+        "name": "Acup Botanical Medicine",
+        "prefix": "ABM"
+    },
+    {
+        "id": 4,
+        "name": "Acup Clinical Services",
+        "prefix": "ACS"
+    },
+    {
+        "id": 5,
+        "name": "Acup Herbal Med Thry",
+        "prefix": "AHM"
+    },
+    {
+        "id": 6,
+        "name": "Acup Nutrition",
+        "prefix": "ANT"
+    },
+    {
+        "id": 7,
+        "name": "Acup Pract & Tech",
+        "prefix": "APT"
+    },
+    {
+        "id": 8,
+        "name": "Acup Principles & Practice",
+        "prefix": "APP"
+    },
+    {
+        "id": 9,
+        "name": "Acup Psyc",
+        "prefix": "APS"
+    },
+    {
+        "id": 10,
+        "name": "Administration",
+        "prefix": "ADMIN"
+    },
+    {
+        "id": 11,
+        "name": "Anatomy",
+        "prefix": "AN"
+    },
+    {
+        "id": 12,
+        "name": "Applied Music",
+        "prefix": "APM"
+    },
+    {
+        "id": 13,
+        "name": "Arabic",
+        "prefix": "ARAB"
+    },
+    {
+        "id": 14,
+        "name": "Arabic Language",
+        "prefix": "ARABC"
+    },
+    {
+        "id": 15,
+        "name": "Art & Design",
+        "prefix": "ADSN"
+    },
+    {
+        "id": 16,
+        "name": "Asian\/Chinese Herbology",
+        "prefix": "ACH"
+    },
+    {
+        "id": 17,
+        "name": "Basic Studies",
+        "prefix": "NBS"
+    },
+    {
+        "id": 18,
+        "name": "Biochemistry- Chiropractic",
+        "prefix": "BC"
+    },
+    {
+        "id": 19,
+        "name": "Biology",
+        "prefix": "BIOL"
+    },
+    {
+        "id": 20,
+        "name": "Biomedical Engineering",
+        "prefix": "BMEG"
+    },
+    {
+        "id": 21,
+        "name": "Botanical Medicine",
+        "prefix": "NBM"
+    },
+    {
+        "id": 22,
+        "name": "Business Administration",
+        "prefix": "BUAD"
+    },
+    {
+        "id": 23,
+        "name": "Business Analytics & Intellige",
+        "prefix": "BAI"
+    },
+    {
+        "id": 24,
+        "name": "Business Capstone",
+        "prefix": "BUCP"
+    },
+    {
+        "id": 25,
+        "name": "Business Law",
+        "prefix": "BLAW"
+    },
+    {
+        "id": 26,
+        "name": "Business Procedures- Chiroprac",
+        "prefix": "BP"
+    },
+    {
+        "id": 27,
+        "name": "Capstone",
+        "prefix": "CAPS"
+    },
+    {
+        "id": 28,
+        "name": "Chemistry",
+        "prefix": "CHEM"
+    },
+    {
+        "id": 29,
+        "name": "Chinese",
+        "prefix": "CHIN"
+    },
+    {
+        "id": 30,
+        "name": "Chinese Herbal Clinic",
+        "prefix": "ACC"
+    },
+    {
+        "id": 31,
+        "name": "Chiro Skills & Technique",
+        "prefix": "CH"
+    },
+    {
+        "id": 32,
+        "name": "Chiropractic Skills\/Technique",
+        "prefix": "TE"
+    },
+    {
+        "id": 33,
+        "name": "Cinema",
+        "prefix": "CINE"
+    },
+    {
+        "id": 34,
+        "name": "Cinema History and Theory",
+        "prefix": "CIHT"
+    },
+    {
+        "id": 35,
+        "name": "Clinical Education",
+        "prefix": "NCE"
+    },
+    {
+        "id": 36,
+        "name": "Clinical Nutrition",
+        "prefix": "NNT"
+    },
+    {
+        "id": 37,
+        "name": "Clinical Nutrition- Chiroprac",
+        "prefix": "CN"
+    },
+    {
+        "id": 38,
+        "name": "Clinical Psychology- Chiro",
+        "prefix": "PS"
+    },
+    {
+        "id": 39,
+        "name": "Clinical Sciences",
+        "prefix": "NCS"
+    },
+    {
+        "id": 40,
+        "name": "Clinical Services",
+        "prefix": "CL"
+    },
+    {
+        "id": 41,
+        "name": "Clinical Services- Chiroprac",
+        "prefix": "CS"
+    },
+    {
+        "id": 42,
+        "name": "Cntr Busn Info Tech Program",
+        "prefix": "CBIT"
+    },
+    {
+        "id": 43,
+        "name": "Comp Application\/Info Sytems",
+        "prefix": "CAIS"
+    },
+    {
+        "id": 44,
+        "name": "Computer Engineering",
+        "prefix": "CPEG"
+    },
+    {
+        "id": 45,
+        "name": "Computer Science",
+        "prefix": "CPSC"
+    },
+    {
+        "id": 46,
+        "name": "Counseling",
+        "prefix": "COUN"
+    },
+    {
+        "id": 47,
+        "name": "Cptr Engr Technology",
+        "prefix": "CPET"
+    },
+    {
+        "id": 48,
+        "name": "Criminal Justice",
+        "prefix": "CJHS"
+    },
+    {
+        "id": 49,
+        "name": "Dental Hygiene",
+        "prefix": "DHYG"
+    },
+    {
+        "id": 50,
+        "name": "Design Management",
+        "prefix": "DSNMG"
+    },
+    {
+        "id": 51,
+        "name": "Diagnosis",
+        "prefix": "DX"
+    },
+    {
+        "id": 52,
+        "name": "Differential Diagnosis",
+        "prefix": "DD"
+    },
+    {
+        "id": 53,
+        "name": "Digitial Marketing Comm",
+        "prefix": "DMCM"
+    },
+    {
+        "id": 54,
+        "name": "East Asian & Pacific Rim Stud",
+        "prefix": "EAPRS"
+    },
+    {
+        "id": 55,
+        "name": "Economics",
+        "prefix": "ECON"
+    },
+    {
+        "id": 56,
+        "name": "Education",
+        "prefix": "EDUC"
+    },
+    {
+        "id": 57,
+        "name": "Education Mod Map",
+        "prefix": "EDMM"
+    },
+    {
+        "id": 58,
+        "name": "Educational Leadership",
+        "prefix": "EDLD"
+    },
+    {
+        "id": 59,
+        "name": "Electrical Engineering",
+        "prefix": "ELEG"
+    },
+    {
+        "id": 60,
+        "name": "Emergency Procedures",
+        "prefix": "ER"
+    },
+    {
+        "id": 61,
+        "name": "Engineering",
+        "prefix": "ENGR"
+    },
+    {
+        "id": 62,
+        "name": "Engl As Second Lang",
+        "prefix": "ESL"
+    },
+    {
+        "id": 63,
+        "name": "English",
+        "prefix": "ENGL"
+    },
+    {
+        "id": 64,
+        "name": "English Lang Institute",
+        "prefix": "ELI"
+    },
+    {
+        "id": 65,
+        "name": "Fashion Merchandising",
+        "prefix": "FM"
+    },
+    {
+        "id": 66,
+        "name": "Finance",
+        "prefix": "FIN"
+    },
+    {
+        "id": 67,
+        "name": "Fine Arts",
+        "prefix": "FA"
+    },
+    {
+        "id": 68,
+        "name": "First Year Experience",
+        "prefix": "FYE"
+    },
+    {
+        "id": 69,
+        "name": "First Year Seminar",
+        "prefix": "FYS"
+    },
+    {
+        "id": 70,
+        "name": "Free Elec",
+        "prefix": "FREE"
+    },
+    {
+        "id": 71,
+        "name": "French",
+        "prefix": "FREN"
+    },
+    {
+        "id": 72,
+        "name": "General Studies",
+        "prefix": "GNST"
+    },
+    {
+        "id": 73,
+        "name": "Geology",
+        "prefix": "GEOL"
+    },
+    {
+        "id": 74,
+        "name": "Gerontology",
+        "prefix": "GERO"
+    },
+    {
+        "id": 75,
+        "name": "Global Communication",
+        "prefix": "GMCS"
+    },
+    {
+        "id": 76,
+        "name": "Global Development & Peace",
+        "prefix": "GLDP"
+    },
+    {
+        "id": 77,
+        "name": "Graphic Design",
+        "prefix": "GDSN"
+    },
+    {
+        "id": 78,
+        "name": "Health Science",
+        "prefix": "HSCI"
+    },
+    {
+        "id": 79,
+        "name": "Healthcare Administration",
+        "prefix": "HLAD"
+    },
+    {
+        "id": 80,
+        "name": "History",
+        "prefix": "HIST"
+    },
+    {
+        "id": 81,
+        "name": "Homeopathic Medicine",
+        "prefix": "NHM"
+    },
+    {
+        "id": 82,
+        "name": "Honors Program",
+        "prefix": "HONR"
+    },
+    {
+        "id": 83,
+        "name": "Human Resource Administration",
+        "prefix": "HRAD"
+    },
+    {
+        "id": 84,
+        "name": "Human Services",
+        "prefix": "HUSV"
+    },
+    {
+        "id": 85,
+        "name": "Humanities",
+        "prefix": "HUM"
+    },
+    {
+        "id": 86,
+        "name": "Illustration",
+        "prefix": "ILLUS"
+    },
+    {
+        "id": 87,
+        "name": "Industrial Design",
+        "prefix": "IDDSN"
+    },
+    {
+        "id": 88,
+        "name": "Information Tech Mgmt",
+        "prefix": "ITKM"
+    },
+    {
+        "id": 89,
+        "name": "Integrated Studies",
+        "prefix": "INTST"
+    },
+    {
+        "id": 90,
+        "name": "Interior Design",
+        "prefix": "ITDSN"
+    },
+    {
+        "id": 91,
+        "name": "International Business",
+        "prefix": "INTLBU"
+    },
+    {
+        "id": 92,
+        "name": "Intl Pol Econ & Diplomacy",
+        "prefix": "IPED"
+    },
+    {
+        "id": 93,
+        "name": "Japanese",
+        "prefix": "JAPN"
+    },
+    {
+        "id": 94,
+        "name": "Korean",
+        "prefix": "KORN"
+    },
+    {
+        "id": 95,
+        "name": "Liberal Arts Electv",
+        "prefix": "LIBARTS"
+    },
+    {
+        "id": 96,
+        "name": "Liberal Arts Topics",
+        "prefix": "LART"
+    },
+    {
+        "id": 97,
+        "name": "M.S. Physician Assistant",
+        "prefix": "MSPA"
+    },
+    {
+        "id": 98,
+        "name": "Management & Ind Relations",
+        "prefix": "MGMT"
+    },
+    {
+        "id": 99,
+        "name": "Management Engineering",
+        "prefix": "MGEG"
+    },
+    {
+        "id": 100,
+        "name": "Marketing",
+        "prefix": "MKTG"
+    },
+    {
+        "id": 101,
+        "name": "Martial Arts",
+        "prefix": "MARTS"
+    },
+    {
+        "id": 102,
+        "name": "Mass Communications",
+        "prefix": "MCOM"
+    },
+    {
+        "id": 103,
+        "name": "Master of Public Health",
+        "prefix": "MPH"
+    },
+    {
+        "id": 104,
+        "name": "Mathematics",
+        "prefix": "MATH"
+    },
+    {
+        "id": 105,
+        "name": "Mechanical Engineering",
+        "prefix": "MEEG"
+    },
+    {
+        "id": 106,
+        "name": "Medical Laboratory Sciences",
+        "prefix": "MLSC"
+    },
+    {
+        "id": 107,
+        "name": "Microbiology and Public Health",
+        "prefix": "MB"
+    },
+    {
+        "id": 108,
+        "name": "Modern Language",
+        "prefix": "LANG"
+    },
+    {
+        "id": 109,
+        "name": "Movemnt & Respiratn Stds",
+        "prefix": "AMR"
+    },
+    {
+        "id": 110,
+        "name": "Music",
+        "prefix": "MUSC"
+    },
+    {
+        "id": 111,
+        "name": "Music Education",
+        "prefix": "MSED"
+    },
+    {
+        "id": 112,
+        "name": "Nat Trad Chinese Medicine",
+        "prefix": "NTCM"
+    },
+    {
+        "id": 113,
+        "name": "Naturopathic Med Psychology",
+        "prefix": "NPS"
+    },
+    {
+        "id": 114,
+        "name": "Naturopathic Obstetrics",
+        "prefix": "NOB"
+    },
+    {
+        "id": 115,
+        "name": "Neuroscience",
+        "prefix": "NS"
+    },
+    {
+        "id": 116,
+        "name": "Nursing",
+        "prefix": "NURS"
+    },
+    {
+        "id": 117,
+        "name": "Nutrition",
+        "prefix": "NUTR"
+    },
+    {
+        "id": 118,
+        "name": "Organizational Leadership",
+        "prefix": "ORLD"
+    },
+    {
+        "id": 119,
+        "name": "Oriental Medicine",
+        "prefix": "NOM"
+    },
+    {
+        "id": 120,
+        "name": "Oriental Thry,Diagn & Appl",
+        "prefix": "ATD"
+    },
+    {
+        "id": 121,
+        "name": "Pathology",
+        "prefix": "PA"
+    },
+    {
+        "id": 122,
+        "name": "Phd Comp Sci & Engr",
+        "prefix": "CPSE"
+    },
+    {
+        "id": 123,
+        "name": "Philosophy",
+        "prefix": "PHIL"
+    },
+    {
+        "id": 124,
+        "name": "Physical Medicine",
+        "prefix": "NPM"
+    },
+    {
+        "id": 125,
+        "name": "Physics",
+        "prefix": "PHYS"
+    },
+    {
+        "id": 126,
+        "name": "Physiological Therapeutics",
+        "prefix": "PT"
+    },
+    {
+        "id": 127,
+        "name": "Physiology- Chiropractic",
+        "prefix": "PH"
+    },
+    {
+        "id": 128,
+        "name": "Political Science",
+        "prefix": "PSCI"
+    },
+    {
+        "id": 129,
+        "name": "Post Graduate Chiropractic",
+        "prefix": "PGCH"
+    },
+    {
+        "id": 130,
+        "name": "Post-Graduate Chiro",
+        "prefix": "PG"
+    },
+    {
+        "id": 131,
+        "name": "Post-Graduate Dental Hyg",
+        "prefix": "PGDH"
+    },
+    {
+        "id": 132,
+        "name": "Practice Organ Systems",
+        "prefix": "NNP"
+    },
+    {
+        "id": 133,
+        "name": "Principles and Practice- Chiro",
+        "prefix": "PP"
+    },
+    {
+        "id": 134,
+        "name": "Principles and Practices",
+        "prefix": "NPP"
+    },
+    {
+        "id": 135,
+        "name": "Prof Devel Engineering",
+        "prefix": "PDEN"
+    },
+    {
+        "id": 136,
+        "name": "Professional Studies",
+        "prefix": "PRST"
+    },
+    {
+        "id": 137,
+        "name": "Psychology",
+        "prefix": "PSYC"
+    },
+    {
+        "id": 138,
+        "name": "Radiology",
+        "prefix": "DI"
+    },
+    {
+        "id": 139,
+        "name": "Research",
+        "prefix": "NRS"
+    },
+    {
+        "id": 140,
+        "name": "Research- Chiropractic",
+        "prefix": "RS"
+    },
+    {
+        "id": 141,
+        "name": "Retailing",
+        "prefix": "RETL"
+    },
+    {
+        "id": 142,
+        "name": "Russian",
+        "prefix": "RUS"
+    },
+    {
+        "id": 143,
+        "name": "Science",
+        "prefix": "SCI"
+    },
+    {
+        "id": 144,
+        "name": "Social Sciences",
+        "prefix": "SOSC"
+    },
+    {
+        "id": 145,
+        "name": "Sociology",
+        "prefix": "SOC"
+    },
+    {
+        "id": 146,
+        "name": "Spanish",
+        "prefix": "SPAN"
+    },
+    {
+        "id": 147,
+        "name": "Sports Management",
+        "prefix": "SPMT"
+    },
+    {
+        "id": 148,
+        "name": "Statistics",
+        "prefix": "STAT"
+    },
+    {
+        "id": 149,
+        "name": "Technology Elective",
+        "prefix": "TECH"
+    },
+    {
+        "id": 150,
+        "name": "Technology Management",
+        "prefix": "TCMG"
+    },
+    {
+        "id": 151,
+        "name": "Technology Management Phd",
+        "prefix": "TMPD"
+    },
+    {
+        "id": 152,
+        "name": "Theatre",
+        "prefix": "THA"
+    },
+    {
+        "id": 153,
+        "name": "Western Biomedicine",
+        "prefix": "AWB"
+    },
+    {
+        "id": 154,
+        "name": "World Religions",
+        "prefix": "WREL"
+    }
 ]

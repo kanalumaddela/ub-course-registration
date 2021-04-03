@@ -1,0 +1,98 @@
+[
+    {
+        "id": 1,
+        "name": "Main Campus"
+    },
+    {
+        "id": 2,
+        "name": "Waterbury"
+    },
+    {
+        "id": 3,
+        "name": "Distance Learning-On Line"
+    },
+    {
+        "id": 4,
+        "name": "Riverbend"
+    },
+    {
+        "id": 5,
+        "name": "Hybrid"
+    },
+    {
+        "id": 6,
+        "name": "Fairchild Wheeler Magnet"
+    },
+    {
+        "id": 7,
+        "name": "Trinity Catholic High School"
+    },
+    {
+        "id": 8,
+        "name": "Metropolitan Business Academy"
+    },
+    {
+        "id": 9,
+        "name": "Shelton High School"
+    },
+    {
+        "id": 10,
+        "name": "Hill Regional Career High Sch"
+    },
+    {
+        "id": 11,
+        "name": "Bridgeport Hospital"
+    },
+    {
+        "id": 12,
+        "name": "Stratford High School"
+    },
+    {
+        "id": 13,
+        "name": "Engl Language Institute"
+    },
+    {
+        "id": 14,
+        "name": "Bassick High School"
+    },
+    {
+        "id": 15,
+        "name": "Kolbe Cathedral High School"
+    },
+    {
+        "id": 16,
+        "name": "Marrakech,Inc"
+    },
+    {
+        "id": 17,
+        "name": "Pomeraug High School"
+    },
+    {
+        "id": 18,
+        "name": "Bullard Havens Tech"
+    },
+    {
+        "id": 19,
+        "name": "Ecuador"
+    },
+    {
+        "id": 20,
+        "name": "Ansonia High School"
+    },
+    {
+        "id": 21,
+        "name": "Aquaculture Science and Tech"
+    },
+    {
+        "id": 22,
+        "name": "Aquaculture Sci\/Tech Center"
+    },
+    {
+        "id": 23,
+        "name": "Costa Rica"
+    },
+    {
+        "id": 24,
+        "name": "Hungary"
+    }
+]

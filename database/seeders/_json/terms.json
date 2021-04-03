@@ -1,0 +1,194 @@
+[
+    {
+        "id": 1,
+        "name": null,
+        "semester": "Spring",
+        "year": 2021
+    },
+    {
+        "id": 2,
+        "name": null,
+        "semester": "Fall",
+        "year": 2017
+    },
+    {
+        "id": 3,
+        "name": null,
+        "semester": "Fall",
+        "year": 2016
+    },
+    {
+        "id": 4,
+        "name": null,
+        "semester": "Summer",
+        "year": 2017
+    },
+    {
+        "id": 5,
+        "name": null,
+        "semester": "Summer",
+        "year": 2021
+    },
+    {
+        "id": 6,
+        "name": null,
+        "semester": "Spring",
+        "year": 2017
+    },
+    {
+        "id": 7,
+        "name": "Nutrition",
+        "semester": "Fall",
+        "year": 2016
+    },
+    {
+        "id": 8,
+        "name": "Nutrition",
+        "semester": "Spring",
+        "year": 2017
+    },
+    {
+        "id": 9,
+        "name": "Nutrition",
+        "semester": "Summer",
+        "year": 2017
+    },
+    {
+        "id": 10,
+        "name": "Nutrition",
+        "semester": "Spring",
+        "year": 2021
+    },
+    {
+        "id": 11,
+        "name": "Nutrition",
+        "semester": "Summer",
+        "year": 2021
+    },
+    {
+        "id": 12,
+        "name": "Health Sciences",
+        "semester": "Spring",
+        "year": 2021
+    },
+    {
+        "id": 13,
+        "name": "HS",
+        "semester": "Fall",
+        "year": 2016
+    },
+    {
+        "id": 14,
+        "name": null,
+        "semester": "Fall",
+        "year": 2021
+    },
+    {
+        "id": 15,
+        "name": "HS",
+        "semester": "Spring",
+        "year": 2017
+    },
+    {
+        "id": 16,
+        "name": null,
+        "semester": "Spring",
+        "year": 2019
+    },
+    {
+        "id": 17,
+        "name": null,
+        "semester": "Spring",
+        "year": 2018
+    },
+    {
+        "id": 18,
+        "name": "Health Sciences",
+        "semester": "Fall",
+        "year": 2021
+    },
+    {
+        "id": 19,
+        "name": "Health Sciences",
+        "semester": "Summer",
+        "year": 2021
+    },
+    {
+        "id": 20,
+        "name": "HS",
+        "semester": "Summer",
+        "year": 2017
+    },
+    {
+        "id": 21,
+        "name": "Eli",
+        "semester": "Fall",
+        "year": 2021
+    },
+    {
+        "id": 22,
+        "name": "Eli",
+        "semester": "Spring",
+        "year": 2021
+    },
+    {
+        "id": 23,
+        "name": "Eli",
+        "semester": "Summer",
+        "year": 2021
+    },
+    {
+        "id": 24,
+        "name": "Pa",
+        "semester": "Spring",
+        "year": 2021
+    },
+    {
+        "id": 25,
+        "name": "Pa",
+        "semester": "Summer",
+        "year": 2021
+    },
+    {
+        "id": 26,
+        "name": "PA",
+        "semester": "Spring",
+        "year": 2017
+    },
+    {
+        "id": 27,
+        "name": "Pa",
+        "semester": "Fall",
+        "year": 2021
+    },
+    {
+        "id": 28,
+        "name": "Intersession",
+        "semester": "Winter",
+        "year": null
+    },
+    {
+        "id": 29,
+        "name": "PA",
+        "semester": "Summer",
+        "year": 2017
+    },
+    {
+        "id": 30,
+        "name": "Eli",
+        "semester": "Fall",
+        "year": 2016
+    },
+    {
+        "id": 31,
+        "name": "Eli",
+        "semester": "Spring",
+        "year": 2017
+    },
+    {
+        "id": 32,
+        "name": "Eli",
+        "semester": "Summer",
+        "year": 2017
+    }
+]

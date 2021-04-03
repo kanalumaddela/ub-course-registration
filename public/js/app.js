@@ -18927,6 +18927,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -18941,6 +18945,14 @@ __webpack_require__.r(__webpack_exports__);
     courses: Object,
     departmentsCoursesCount: Array,
     catalogsCoursesCount: Array
+  },
+  methods: {
+    toggleSections: function toggleSections(ev) {
+      return;
+      var elem = ev.target;
+      console.log(elem);
+      elem.nextSibling.nextSibling.classList.toggle('hidden');
+    }
   },
   data: function data() {
     return {
@@ -19525,6 +19537,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -48737,7 +48763,9 @@ var render = function() {
       _c("div", { staticClass: "grid lg:grid-cols-4 gap-4" }, [
         _c("div", { staticClass: "col-span-full lg:col-span-1" }, [
           _c("div", { staticClass: "p-4 sm:rounded bg-white" }, [
-            _c("h1", [_vm._v("Filter Results")])
+            _c("h1", { staticClass: "font-bold text-xl" }, [
+              _vm._v("Filter Results")
+            ])
           ])
         ]),
         _vm._v(" "),
@@ -48798,13 +48826,18 @@ var render = function() {
                     _vm._v(" "),
                     _c("hr", { staticClass: "my-1" }),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      [
-                        _c("h3", { staticClass: "text-lg font-medium mb-2" }, [
-                          _vm._v("Sections")
-                        ]),
-                        _vm._v(" "),
+                    _c("div", [
+                      _c(
+                        "h3",
+                        {
+                          staticClass: "text-lg font-medium mb-2",
+                          on: { click: _vm.toggleSections }
+                        },
+                        [_vm._v("Sections")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
                         _vm._l(course.sections, function(section) {
                           return section.schedule.length
                             ? _c(
@@ -48842,6 +48875,15 @@ var render = function() {
                                                 "border border-gray-400"
                                             },
                                             [_vm._v("Seats")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "th",
+                                            {
+                                              staticClass:
+                                                "border border-gray-400"
+                                            },
+                                            [_vm._v("Days")]
                                           ),
                                           _vm._v(" "),
                                           _c(
@@ -48906,13 +48948,24 @@ var render = function() {
                                                   [
                                                     _vm._v(
                                                       _vm._s(
-                                                        schedule.days.join(
-                                                          " "
+                                                        schedule.days.join(" ")
+                                                      )
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "td",
+                                                  {
+                                                    staticClass:
+                                                      "border border-gray-400"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm.friendlyTime(
+                                                          schedule.start_time
                                                         ) +
-                                                          " " +
-                                                          _vm.friendlyTime(
-                                                            schedule.start_time
-                                                          ) +
                                                           " - " +
                                                           _vm.friendlyTime(
                                                             schedule.end_time
@@ -48956,10 +49009,10 @@ var render = function() {
                                 ]
                               )
                             : _vm._e()
-                        })
-                      ],
-                      2
-                    )
+                        }),
+                        0
+                      )
+                    ])
                   ]
                 )
               }),
@@ -50216,38 +50269,60 @@ var render = function() {
         { staticClass: "flex-1 flex justify-between sm:hidden" },
         [
           _vm.paginator.prev_page_url
-            ? _c(
-                "inertia-link",
-                {
-                  staticClass:
-                    "relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500",
-                  class: {
-                    "cursor-not-allowed opacity-50": !_vm.paginator
-                      .prev_page_url
+            ? [
+                _vm.paginator.prev_page_url
+                  ? _c(
+                      "inertia-link",
+                      {
+                        staticClass:
+                          "relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500",
+                        attrs: { href: _vm.paginator.prev_page_url }
+                      },
+                      [_vm._v("\n                Previous\n            ")]
+                    )
+                  : _vm._e()
+              ]
+            : [
+                _c(
+                  "span",
+                  {
+                    staticClass:
+                      "relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white cursor-not-allowed opacity-50"
                   },
-                  attrs: { href: _vm.paginator.prev_page_url }
-                },
-                [_vm._v("\n            Previous\n        ")]
-              )
-            : _vm._e(),
+                  [_vm._v("\n                Previous\n            ")]
+                )
+              ],
           _vm._v(" "),
           _vm.paginator.next_page_url
-            ? _c(
-                "inertia-link",
-                {
-                  staticClass:
-                    "ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500",
-                  class: {
-                    "cursor-not-allowed opacity-50": !_vm.paginator
-                      .next_page_url
+            ? [
+                _vm.paginator.next_page_url
+                  ? _c(
+                      "inertia-link",
+                      {
+                        staticClass:
+                          "ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500",
+                        class: {
+                          "cursor-not-allowed opacity-50": !_vm.paginator
+                            .next_page_url
+                        },
+                        attrs: { href: _vm.paginator.next_page_url }
+                      },
+                      [_vm._v("\n                Next\n            ")]
+                    )
+                  : _vm._e()
+              ]
+            : [
+                _c(
+                  "span",
+                  {
+                    staticClass:
+                      "relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white cursor-not-allowed opacity-50"
                   },
-                  attrs: { href: _vm.paginator.next_page_url }
-                },
-                [_vm._v("\n            Next\n        ")]
-              )
-            : _vm._e()
+                  [_vm._v("\n                Next\n            ")]
+                )
+              ]
         ],
-        1
+        2
       ),
       _vm._v(" "),
       _c(

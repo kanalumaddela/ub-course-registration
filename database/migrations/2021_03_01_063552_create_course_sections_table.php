@@ -15,10 +15,13 @@ class CreateCourseSectionsTable extends Migration
     {
         Schema::create('course_sections', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('course_id');
-            $table->unsignedInteger('term_id');
             $table->string('number');
             $table->unsignedSmallInteger('seats')->nullable();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('faculty')->nullable();
+            $table->unsignedInteger('course_id');
+            $table->unsignedInteger('term_id');
             $table->timestamps();
         });
     }

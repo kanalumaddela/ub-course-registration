@@ -1,0 +1,54 @@
+[
+    {
+        "id": 1,
+        "name": "Mandeville Hall"
+    },
+    {
+        "id": 2,
+        "name": "Arnold Bernhard Arts-Hum Cntr"
+    },
+    {
+        "id": 3,
+        "name": "Wahlstrom Library"
+    },
+    {
+        "id": 4,
+        "name": "Eleanor N. Dana Hall"
+    },
+    {
+        "id": 5,
+        "name": "Health Science Center"
+    },
+    {
+        "id": 6,
+        "name": "Chiropractic College"
+    },
+    {
+        "id": 7,
+        "name": "Engineering-Technology Bldg"
+    },
+    {
+        "id": 8,
+        "name": "Carlson Hall"
+    },
+    {
+        "id": 9,
+        "name": "Dana Hall of Science"
+    },
+    {
+        "id": 10,
+        "name": "Bates Hall"
+    },
+    {
+        "id": 11,
+        "name": "Cooper Hall"
+    },
+    {
+        "id": 12,
+        "name": "South Hall"
+    },
+    {
+        "id": 13,
+        "name": "Wheeler Recreation Center"
+    }
+]

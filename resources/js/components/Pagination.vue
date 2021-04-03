@@ -1,12 +1,26 @@
 <template>
     <div class="bg-white px-4 py-3 mb-2 flex items-center justify-between sm:px-6 sm:rounded-md">
         <div class="flex-1 flex justify-between sm:hidden">
-            <inertia-link v-if="paginator.prev_page_url" :href="paginator.prev_page_url" v-bind:class="{'cursor-not-allowed opacity-50': !paginator.prev_page_url}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
-                Previous
-            </inertia-link>
-            <inertia-link v-if="paginator.next_page_url" :href="paginator.next_page_url" v-bind:class="{'cursor-not-allowed opacity-50': !paginator.next_page_url}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
-                Next
-            </inertia-link>
+            <template v-if="paginator.prev_page_url">
+                <inertia-link v-if="paginator.prev_page_url" :href="paginator.prev_page_url" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+                    Previous
+                </inertia-link>
+            </template>
+            <template v-else>
+                <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white cursor-not-allowed opacity-50">
+                    Previous
+                </span>
+            </template>
+            <template v-if="paginator.next_page_url">
+                <inertia-link v-if="paginator.next_page_url" :href="paginator.next_page_url" v-bind:class="{'cursor-not-allowed opacity-50': !paginator.next_page_url}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500">
+                    Next
+                </inertia-link>
+            </template>
+            <template v-else>
+                <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white cursor-not-allowed opacity-50">
+                    Next
+                </span>
+            </template>
         </div>
         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div>

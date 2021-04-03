@@ -5,7 +5,7 @@
             <div class="grid lg:grid-cols-4 gap-4">
                 <div class="col-span-full lg:col-span-1">
                     <div class="p-4 sm:rounded bg-white">
-                        <h1>Filter Results</h1>
+                        <h1 class="font-bold text-xl">Filter Results</h1>
                     </div>
                 </div>
                 <div class="col-span-full lg:col-span-3">
@@ -23,29 +23,33 @@
                             </div>
                             <hr class="my-1"/>
                             <div>
-                                <h3 class="text-lg font-medium mb-2">Sections</h3>
-                                <div class="mb-2" v-if="section.schedule.length" v-for="section in course.sections" :key="'section-' + section.id">
-                                    <h5>{{ course.name_shorthand + '-' + section.number }} - {{ section.catalog.name_full }}</h5>
-                                    <table class="min-w-full table-auto border border-gray-400 text-center">
-                                        <thead>
-                                            <tr>
-                                                <th class="border border-gray-400">Seats</th>
-                                                <th class="border border-gray-400">Times</th>
-                                                <th class="border border-gray-400">Location</th>
-                                                <th class="border border-gray-400">Instructor(s)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="border border-gray-400" :rowspan="0">{{ section.seats }}</td>
-                                            </tr>
-                                            <tr v-for="schedule in section.schedule" :key="'schedule-' + schedule.id">
-                                                <td class="border border-gray-400">{{ schedule.days.join(' ') + ' ' + friendlyTime(schedule.start_time) + ' - ' + friendlyTime(schedule.end_time) }}</td>
-                                                <td class="border border-gray-400">{{ schedule.location_id }}</td>
-                                                <td class="border border-gray-400">Teacher</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <h3 @click="toggleSections" class="text-lg font-medium mb-2">Sections</h3>
+                                <div>
+                                    <div class="mb-2" v-if="section.schedule.length" v-for="section in course.sections" :key="'section-' + section.id">
+                                        <h5>{{ course.name_shorthand + '-' + section.number }} - {{ section.catalog.name_full }}</h5>
+                                        <table class="min-w-full table-auto border border-gray-400 text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border border-gray-400">Seats</th>
+                                                    <th class="border border-gray-400">Days</th>
+                                                    <th class="border border-gray-400">Times</th>
+                                                    <th class="border border-gray-400">Location</th>
+                                                    <th class="border border-gray-400">Instructor(s)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="border border-gray-400" :rowspan="0">{{ section.seats }}</td>
+                                                </tr>
+                                                <tr v-for="schedule in section.schedule" :key="'schedule-' + schedule.id">
+                                                    <td class="border border-gray-400">{{ schedule.days.join(' ') }}</td>
+                                                    <td class="border border-gray-400">{{ friendlyTime(schedule.start_time) + ' - ' + friendlyTime(schedule.end_time) }}</td>
+                                                    <td class="border border-gray-400">{{ schedule.location_id }}</td>
+                                                    <td class="border border-gray-400">Teacher</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </card>
@@ -72,6 +76,15 @@ export default {
         courses: Object,
         departmentsCoursesCount: Array,
         catalogsCoursesCount: Array,
+    },
+    methods: {
+        toggleSections(ev) {
+            return;
+
+            let elem = ev.target;
+            console.log(elem);
+            elem.nextSibling.nextSibling.classList.toggle('hidden');
+        }
     },
     data() {
         return {
