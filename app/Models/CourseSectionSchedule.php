@@ -17,7 +17,8 @@ class CourseSectionSchedule extends Model
         'location',
     ];
 
-    protected $casts = [
-        'days' => 'array'
-    ];
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
+    }
 }

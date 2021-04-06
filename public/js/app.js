@@ -18869,6 +18869,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_SiteLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/SiteLayout */ "./resources/js/Layouts/SiteLayout.vue");
 /* harmony import */ var _components_Card__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/Card */ "./resources/js/components/Card.vue");
 /* harmony import */ var _components_Pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/Pagination */ "./resources/js/components/Pagination.vue");
+/* harmony import */ var _components_Collapsible__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/Collapsible */ "./resources/js/components/Collapsible.vue");
+/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+/* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
+/* harmony import */ var _components_ActionButton__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/ActionButton */ "./resources/js/components/ActionButton.vue");
 //
 //
 //
@@ -18931,12 +18935,83 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Search",
   components: {
+    ActionButton: _components_ActionButton__WEBPACK_IMPORTED_MODULE_6__.default,
+    JetInput: _Jetstream_Input__WEBPACK_IMPORTED_MODULE_5__.default,
+    JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_4__.default,
+    Collapsible: _components_Collapsible__WEBPACK_IMPORTED_MODULE_3__.default,
     Pagination: _components_Pagination__WEBPACK_IMPORTED_MODULE_2__.default,
     SiteLayout: _Layouts_SiteLayout__WEBPACK_IMPORTED_MODULE_0__.default,
     Card: _components_Card__WEBPACK_IMPORTED_MODULE_1__.default
@@ -18946,18 +19021,39 @@ __webpack_require__.r(__webpack_exports__);
     departmentsCoursesCount: Array,
     catalogsCoursesCount: Array
   },
-  methods: {
-    toggleSections: function toggleSections(ev) {
-      return;
-      var elem = ev.target;
-      console.log(elem);
-      elem.nextSibling.nextSibling.classList.toggle('hidden');
-    }
-  },
   data: function data() {
     return {
-      seatDisplayed: false
+      seatDisplayed: false,
+      registerSectionId: null
     };
+  },
+  methods: {
+    getRealSectionCount: function getRealSectionCount(sections) {
+      return sections.filter(function (s) {
+        return s.schedule.length > 0;
+      }).length;
+    },
+    registerSection: function registerSection(ev) {
+      var target = ev.target;
+      target.disabled = true;
+      var action = route('register.section', target.dataset.id);
+      console.log(action);
+      axios.post(action).then(function (res) {
+        console.log(res.data);
+
+        if (res.data.success) {
+          target.innerText = 'Remove section from schedule';
+          target.dataset.registerType = 'unregister';
+          target.disabled = false;
+        }
+      }); //
+      // this.$inertia.post(action, {
+      //     _token: this.$page.props.csrf_token
+      // });
+    },
+    toggleRegisterButton: function toggleRegisterButton(elem) {
+      elem.innerText = 'Unregister';
+    }
   }
 });
 
@@ -19343,6 +19439,126 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActionButton.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActionButton.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "ActionButton",
+  props: {
+    action: {
+      type: String,
+      required: true
+    },
+    actionMethod: {
+      type: String,
+      "default": 'get'
+    },
+    actionData: {
+      type: Object,
+      "default": {}
+    },
+    csrf: {
+      type: Boolean,
+      "default": false
+    },
+    toggleData: {
+      type: Array,
+      "default": [{}, {}],
+      validator: function validator(value) {
+        return value.length === 2;
+      }
+    },
+    toggleText: {
+      validator: function validator(value) {
+        return value.length === 2;
+      }
+    },
+    toggleClass: {
+      "default": function _default() {
+        return ['success', 'error'];
+      },
+      validator: function validator(value) {
+        return value.length === 2;
+      }
+    },
+    initialState: {
+      type: Number,
+      "default": 0
+    }
+  },
+  data: function data() {
+    return {
+      success: null,
+      currentState: null
+    };
+  },
+  computed: {
+    buttonClass: function buttonClass() {
+      var cssClass = '';
+      cssClass += this.success ? 'success' : this.success === false ? 'false' : '';
+      cssClass += ' ' + this.toggleClass[this.currentState];
+      return cssClass;
+    }
+  },
+  methods: {
+    toggleCurrentState: function toggleCurrentState() {
+      this.currentState = 1 - this.currentState;
+    },
+    doAction: function doAction() {
+      var _this = this;
+
+      var method = this.actionMethod;
+
+      var data = _objectSpread(_objectSpread({}, this.actionData), this.toggleData[this.currentState]);
+
+      this.$el.disabled = true;
+
+      if (this.csrf) {
+        data._token = this.$page.props.csrf_token;
+      }
+
+      axios[method](this.action, data).then(function (res) {
+        _this.success = res.data.success;
+
+        if (_this.success) {
+          _this.toggleCurrentState();
+        } else {
+          console.error(res.data);
+        }
+      })["catch"](function (err) {
+        console.error(err);
+      })["finally"](function (_) {
+        _this.$el.disabled = false;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.currentState = this.initialState;
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Card.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Card.vue?vue&type=script&lang=js& ***!
@@ -19367,6 +19583,70 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     data: Object,
     classes: String
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Collapsible.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Collapsible.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Collapsible",
+  props: {
+    // open: {
+    //     type: Boolean,
+    //     default: false,
+    // },
+    headerClasses: {
+      type: String,
+      "default": 'p-3 bg-gray-200'
+    },
+    contentClasses: {
+      type: String,
+      "default": 'p-3'
+    }
+  },
+  data: function data() {
+    return {
+      open: false
+    };
+  },
+  methods: {
+    openContent: function openContent() {
+      this.open = !this.open;
+    }
+  },
+  computed: {
+    getContentClasses: function getContentClasses() {
+      return this.contentClasses + (this.open ? '' : ' hidden');
+    }
   }
 });
 
@@ -40682,6 +40962,45 @@ component.options.__file = "resources/js/Pages/Welcome.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/ActionButton.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/ActionButton.vue ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ActionButton_vue_vue_type_template_id_a8b77e1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActionButton.vue?vue&type=template&id=a8b77e1a&scoped=true& */ "./resources/js/components/ActionButton.vue?vue&type=template&id=a8b77e1a&scoped=true&");
+/* harmony import */ var _ActionButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ActionButton.vue?vue&type=script&lang=js& */ "./resources/js/components/ActionButton.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _ActionButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _ActionButton_vue_vue_type_template_id_a8b77e1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ActionButton_vue_vue_type_template_id_a8b77e1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "a8b77e1a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ActionButton.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Card.vue":
 /*!******************************************!*\
   !*** ./resources/js/components/Card.vue ***!
@@ -40717,6 +41036,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/Card.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Collapsible.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/Collapsible.vue ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Collapsible_vue_vue_type_template_id_12405422___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Collapsible.vue?vue&type=template&id=12405422& */ "./resources/js/components/Collapsible.vue?vue&type=template&id=12405422&");
+/* harmony import */ var _Collapsible_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Collapsible.vue?vue&type=script&lang=js& */ "./resources/js/components/Collapsible.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Collapsible_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Collapsible_vue_vue_type_template_id_12405422___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Collapsible_vue_vue_type_template_id_12405422___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Collapsible.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -41606,6 +41964,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ActionButton.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/ActionButton.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ActionButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ActionButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActionButton.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ActionButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Card.vue?vue&type=script&lang=js&":
 /*!*******************************************************************!*\
   !*** ./resources/js/components/Card.vue?vue&type=script&lang=js& ***!
@@ -41619,6 +41993,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Card.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Card.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Card_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Collapsible.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/Collapsible.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Collapsible_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Collapsible.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Collapsible.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Collapsible_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -42601,6 +42991,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ActionButton.vue?vue&type=template&id=a8b77e1a&scoped=true&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/ActionButton.vue?vue&type=template&id=a8b77e1a&scoped=true& ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActionButton_vue_vue_type_template_id_a8b77e1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActionButton_vue_vue_type_template_id_a8b77e1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActionButton_vue_vue_type_template_id_a8b77e1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ActionButton.vue?vue&type=template&id=a8b77e1a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActionButton.vue?vue&type=template&id=a8b77e1a&scoped=true&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Card.vue?vue&type=template&id=b9bc2c0a&scoped=true&":
 /*!*************************************************************************************!*\
   !*** ./resources/js/components/Card.vue?vue&type=template&id=b9bc2c0a&scoped=true& ***!
@@ -42614,6 +43021,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Card_vue_vue_type_template_id_b9bc2c0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Card_vue_vue_type_template_id_b9bc2c0a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Card.vue?vue&type=template&id=b9bc2c0a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Card.vue?vue&type=template&id=b9bc2c0a&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Collapsible.vue?vue&type=template&id=12405422&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/Collapsible.vue?vue&type=template&id=12405422& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Collapsible_vue_vue_type_template_id_12405422___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Collapsible_vue_vue_type_template_id_12405422___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Collapsible_vue_vue_type_template_id_12405422___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Collapsible.vue?vue&type=template&id=12405422& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Collapsible.vue?vue&type=template&id=12405422&");
 
 
 /***/ }),
@@ -48762,11 +49186,22 @@ var render = function() {
     _c("div", { staticClass: "py-12 max-w-7xl mx-auto sm:px-6 lg:px-8" }, [
       _c("div", { staticClass: "grid lg:grid-cols-4 gap-4" }, [
         _c("div", { staticClass: "col-span-full lg:col-span-1" }, [
-          _c("div", { staticClass: "p-4 sm:rounded bg-white" }, [
-            _c("h1", { staticClass: "font-bold text-xl" }, [
-              _vm._v("Filter Results")
-            ])
-          ])
+          _c(
+            "div",
+            { staticClass: "p-4 sm:rounded bg-white" },
+            [
+              _c("h1", { staticClass: "font-bold text-xl" }, [
+                _vm._v("Filter Results")
+              ]),
+              _vm._v(" "),
+              _c("jet-button", [
+                _vm._v(
+                  "\n                            Apply\n                        "
+                )
+              ])
+            ],
+            1
+          )
         ]),
         _vm._v(" "),
         _c(
@@ -48789,230 +49224,386 @@ var render = function() {
                     attrs: { classes: "p-4 sm:rounded bg-white", data: course }
                   },
                   [
-                    _c("h1", { staticClass: "text-xl font-bold" }, [
-                      _vm._v(
-                        "[" +
-                          _vm._s(course.name_shorthand) +
-                          "] " +
-                          _vm._s(course.name) +
-                          _vm._s(
-                            course.credits
-                              ? " - (" +
-                                  (course.credits +
-                                    (course.credits > 1
-                                      ? " Credits"
-                                      : " Credit")) +
-                                  ")"
-                              : ""
+                    _c("div", { staticClass: "flex items-center" }, [
+                      _c("div", { staticClass: "flex-grow" }, [
+                        _c("h1", { staticClass: "text-xl font-bold" }, [
+                          _vm._v(
+                            "\n                                        [" +
+                              _vm._s(course.name_shorthand) +
+                              "] " +
+                              _vm._s(course.name) +
+                              _vm._s(
+                                course.credits
+                                  ? " - (" +
+                                      (course.credits +
+                                        (course.credits > 1
+                                          ? " Credits"
+                                          : " Credit")) +
+                                      ")"
+                                  : ""
+                              ) +
+                              "\n                                    "
                           )
-                      )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", [_vm._v(_vm._s(course.department.name))])
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "text-sm text-gray-500" }, [
                       course.description
                         ? _c("p", [
                             _vm._v(
-                              "\n                                " +
+                              "\n                                    " +
                                 _vm._s(course.description) +
-                                "\n                            "
+                                "\n                                "
                             )
                           ])
                         : _c("p", [
                             _vm._v(
-                              "\n                                No description available...\n                            "
+                              "\n                                    No description available...\n                                "
                             )
                           ])
                     ]),
                     _vm._v(" "),
-                    _c("hr", { staticClass: "my-1" }),
+                    _c("hr", { staticClass: "my-2" }),
                     _vm._v(" "),
-                    _c("div", [
-                      _c(
-                        "h3",
-                        {
-                          staticClass: "text-lg font-medium mb-2",
-                          on: { click: _vm.toggleSections }
-                        },
-                        [_vm._v("Sections")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        _vm._l(course.sections, function(section) {
-                          return section.schedule.length
-                            ? _c(
-                                "div",
+                    _c(
+                      "div",
+                      [
+                        _c(
+                          "collapsible",
+                          {
+                            staticClass: "border border-gray-200",
+                            scopedSlots: _vm._u(
+                              [
                                 {
-                                  key: "section-" + section.id,
-                                  staticClass: "mb-2"
-                                },
-                                [
-                                  _c("h5", [
-                                    _vm._v(
-                                      _vm._s(
-                                        course.name_shorthand +
-                                          "-" +
-                                          section.number
-                                      ) +
-                                        " - " +
-                                        _vm._s(section.catalog.name_full)
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "table",
+                                  key: "header",
+                                  fn: function() {
+                                    return [
+                                      _c("h1", [
+                                        _vm._v(
+                                          "View available sections (" +
+                                            _vm._s(
+                                              _vm.getRealSectionCount(
+                                                course.sections
+                                              )
+                                            ) +
+                                            ")"
+                                        )
+                                      ])
+                                    ]
+                                  },
+                                  proxy: true
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          },
+                          [
+                            _vm._v(" "),
+                            _vm._l(course.sections, function(section) {
+                              return section.schedule.length
+                                ? _c(
+                                    "div",
                                     {
-                                      staticClass:
-                                        "min-w-full table-auto border border-gray-400 text-center"
+                                      key: "section-" + section.id,
+                                      staticClass: "mb-4 border border-gray-400"
                                     },
                                     [
-                                      _c("thead", [
-                                        _c("tr", [
-                                          _c(
-                                            "th",
-                                            {
-                                              staticClass:
-                                                "border border-gray-400"
-                                            },
-                                            [_vm._v("Seats")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "th",
-                                            {
-                                              staticClass:
-                                                "border border-gray-400"
-                                            },
-                                            [_vm._v("Days")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "th",
-                                            {
-                                              staticClass:
-                                                "border border-gray-400"
-                                            },
-                                            [_vm._v("Times")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "th",
-                                            {
-                                              staticClass:
-                                                "border border-gray-400"
-                                            },
-                                            [_vm._v("Location")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "th",
-                                            {
-                                              staticClass:
-                                                "border border-gray-400"
-                                            },
-                                            [_vm._v("Instructor(s)")]
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
                                       _c(
-                                        "tbody",
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "flex items-center px-1 py-2"
+                                        },
                                         [
-                                          _c("tr", [
-                                            _c(
-                                              "td",
-                                              {
-                                                staticClass:
-                                                  "border border-gray-400",
-                                                attrs: { rowspan: 0 }
-                                              },
-                                              [_vm._v(_vm._s(section.seats))]
-                                            )
-                                          ]),
+                                          _c(
+                                            "h5",
+                                            {
+                                              staticClass: "flex-grow underline"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                                " +
+                                                  _vm._s(
+                                                    course.name_shorthand +
+                                                      "-" +
+                                                      section.number
+                                                  ) +
+                                                  " -\n                                                " +
+                                                  _vm._s(
+                                                    section.catalog.name_full
+                                                  )
+                                              )
+                                            ]
+                                          ),
                                           _vm._v(" "),
-                                          _vm._l(section.schedule, function(
-                                            schedule
-                                          ) {
-                                            return _c(
-                                              "tr",
-                                              {
-                                                key: "schedule-" + schedule.id
+                                          _c("action-button", {
+                                            staticClass:
+                                              "px-3 py-1 rounded border",
+                                            attrs: {
+                                              action: _vm.route(
+                                                "register.section",
+                                                section.id
+                                              ),
+                                              "action-method": "post",
+                                              "action-data": {
+                                                sectionId: section.id
                                               },
-                                              [
-                                                _c(
-                                                  "td",
-                                                  {
-                                                    staticClass:
-                                                      "border border-gray-400"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        schedule.days.join(" ")
-                                                      )
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "td",
-                                                  {
-                                                    staticClass:
-                                                      "border border-gray-400"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        _vm.friendlyTime(
-                                                          schedule.start_time
-                                                        ) +
-                                                          " - " +
-                                                          _vm.friendlyTime(
-                                                            schedule.end_time
-                                                          )
-                                                      )
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "td",
-                                                  {
-                                                    staticClass:
-                                                      "border border-gray-400"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        schedule.location_id
-                                                      )
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "td",
-                                                  {
-                                                    staticClass:
-                                                      "border border-gray-400"
-                                                  },
-                                                  [_vm._v("Teacher")]
-                                                )
-                                              ]
-                                            )
+                                              csrf: true,
+                                              "toggle-data": [
+                                                { type: "register" },
+                                                { type: "unregister" }
+                                              ],
+                                              "toggle-text": [
+                                                "Add Section to your schedule",
+                                                "Remove section from schedule"
+                                              ],
+                                              "toggle-class": [
+                                                "text-white bg-blue-600 border-blue-600 hover:text-blue-600 hover:bg-white",
+                                                "text-white bg-red-600 border-red-600 hover:text-red-600 hover:bg-white"
+                                              ],
+                                              "initial-state": 0
+                                            }
                                           })
                                         ],
-                                        2
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "table",
+                                        {
+                                          staticClass:
+                                            "min-w-full table-fixed text-center"
+                                        },
+                                        [
+                                          _c("thead", [
+                                            _c("tr", [
+                                              _c(
+                                                "th",
+                                                {
+                                                  staticClass:
+                                                    "border-t border-b border-gray-400"
+                                                },
+                                                [_vm._v("Registered")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "th",
+                                                {
+                                                  staticClass:
+                                                    "border border-gray-400"
+                                                },
+                                                [_vm._v("Instructor(s)")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "th",
+                                                {
+                                                  staticClass:
+                                                    "border border-gray-400"
+                                                },
+                                                [_vm._v("Type")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "th",
+                                                {
+                                                  staticClass:
+                                                    "border border-gray-400"
+                                                },
+                                                [_vm._v("Times")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "th",
+                                                {
+                                                  staticClass:
+                                                    "border border-gray-400"
+                                                },
+                                                [_vm._v("Building")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "th",
+                                                {
+                                                  staticClass:
+                                                    "border border-gray-400"
+                                                },
+                                                [_vm._v("Room")]
+                                              )
+                                            ])
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "tbody",
+                                            [
+                                              _c("tr", [
+                                                _c(
+                                                  "td",
+                                                  {
+                                                    staticClass:
+                                                      "border-t border-r border-gray-400",
+                                                    attrs: { rowspan: "0" }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                        " +
+                                                        _vm._s(
+                                                          section.seats_left
+                                                        ) +
+                                                        " / " +
+                                                        _vm._s(section.seats) +
+                                                        "\n                                                    "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "td",
+                                                  {
+                                                    staticClass:
+                                                      "border-l border-gray-400",
+                                                    attrs: { rowspan: "0" }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                        " +
+                                                        _vm._s(
+                                                          section.faculty
+                                                            ? section.faculty
+                                                                .split(",")
+                                                                .join(", ")
+                                                            : "TBA"
+                                                        ) +
+                                                        "\n                                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _vm._l(section.schedule, function(
+                                                schedule
+                                              ) {
+                                                return _c(
+                                                  "tr",
+                                                  {
+                                                    key:
+                                                      "schedule-" + schedule.id
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "td",
+                                                      {
+                                                        staticClass:
+                                                          "border border-gray-400"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(schedule.type)
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    schedule.start_time
+                                                      ? _c(
+                                                          "td",
+                                                          {
+                                                            staticClass:
+                                                              "border border-gray-400"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                                        " +
+                                                                _vm._s(
+                                                                  schedule.days
+                                                                ) +
+                                                                "\n                                                        " +
+                                                                _vm._s(
+                                                                  _vm.friendlyTime(
+                                                                    schedule.start_time
+                                                                  ) +
+                                                                    " - " +
+                                                                    _vm.friendlyTime(
+                                                                      schedule.end_time
+                                                                    )
+                                                                ) +
+                                                                "\n                                                    "
+                                                            )
+                                                          ]
+                                                        )
+                                                      : _c(
+                                                          "td",
+                                                          {
+                                                            staticClass:
+                                                              "border border-gray-400"
+                                                          },
+                                                          [_vm._v("TBA")]
+                                                        ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "td",
+                                                      {
+                                                        staticClass:
+                                                          "border border-gray-400"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                                        " +
+                                                            _vm._s(
+                                                              schedule.building
+                                                                ? schedule
+                                                                    .building
+                                                                    .name
+                                                                : !schedule.is_online
+                                                                ? "TBA"
+                                                                : "N/A"
+                                                            ) +
+                                                            "\n                                                    "
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "td",
+                                                      {
+                                                        staticClass:
+                                                          "border-t border-l border-gray-400"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                                        " +
+                                                            _vm._s(
+                                                              schedule.room
+                                                                ? schedule.room
+                                                                : !schedule.is_online
+                                                                ? "TBA"
+                                                                : "N/A"
+                                                            ) +
+                                                            "\n                                                    "
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              })
+                                            ],
+                                            2
+                                          )
+                                        ]
                                       )
                                     ]
                                   )
-                                ]
-                              )
-                            : _vm._e()
-                        }),
-                        0
-                      )
-                    ])
+                                : _vm._e()
+                            })
+                          ],
+                          2
+                        )
+                      ],
+                      1
+                    )
                   ]
                 )
               }),
@@ -49130,7 +49721,10 @@ var render = function() {
               _vm._l(_vm.courses.data, function(course) {
                 return _c(
                   "inertia-link",
-                  { key: course.id, attrs: { href: "/courses/" + course.id } },
+                  {
+                    key: "course-" + course.id,
+                    attrs: { href: "/courses/" + course.id }
+                  },
                   [
                     _c(
                       "div",
@@ -49890,6 +50484,39 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActionButton.vue?vue&type=template&id=a8b77e1a&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ActionButton.vue?vue&type=template&id=a8b77e1a&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      staticClass: "disabled:opacity-75 disabled:cursor-default",
+      class: _vm.buttonClass,
+      on: { click: _vm.doAction }
+    },
+    [_vm._v("\n    " + _vm._s(_vm.toggleText[_vm.currentState]) + "\n")]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Card.vue?vue&type=template&id=b9bc2c0a&scoped=true&":
 /*!****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Card.vue?vue&type=template&id=b9bc2c0a&scoped=true& ***!
@@ -49916,6 +50543,75 @@ var render = function() {
     ],
     2
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Collapsible.vue?vue&type=template&id=12405422&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Collapsible.vue?vue&type=template&id=12405422& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      {
+        staticClass: "relative",
+        class: _vm.headerClasses,
+        on: { click: _vm.openContent }
+      },
+      [
+        _c("div", { staticClass: "flex items-center" }, [
+          _c(
+            "div",
+            { staticClass: "flex-grow cursor-pointer" },
+            [_vm._t("header")],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "svg",
+            {
+              staticClass: "w-8 transform",
+              class: { "rotate-180": _vm.open },
+              attrs: {
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 20 20",
+                fill: "currentColor"
+              }
+            },
+            [
+              _c("path", {
+                attrs: {
+                  "fill-rule": "evenodd",
+                  d:
+                    "M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z",
+                  "clip-rule": "evenodd"
+                }
+              })
+            ]
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { class: _vm.getContentClasses }, [_vm._t("default")], 2)
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

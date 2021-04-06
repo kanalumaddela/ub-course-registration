@@ -11,7 +11,7 @@
                 <pagination :paginator="courses" />
 
                 <div class="py-2 grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
-                    <inertia-link v-for="course in courses.data" :href="`/courses/${course.id}`" :key="course.id">
+                    <inertia-link v-for="course in courses.data" :href="`/courses/${course.id}`" :key="`course-${course.id}`">
                         <div class="shadow overflow-hidden sm:rounded-md bg-white" style="height: 100%">
                             <div class="px-6 py-4" style="border-bottom: 1px solid rgba(0,0,0,.1)">
                                 <h1 class="font-bold">{{ course.name }}</h1>

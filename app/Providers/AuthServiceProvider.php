@@ -26,10 +26,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        if (!app()->runningInConsole() && Auth::guest() && env('APP_DEBUG')) {
-            Auth::loginUsingId(1);
-        }
-
         Gate::before(function ($user, $ability) {
             return $user->id === 1 || $user->hasRole('admin') ? true : null;
         });

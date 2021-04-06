@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use DateTime;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class GenerateSeedData extends Command
 {
@@ -66,6 +67,8 @@ class GenerateSeedData extends Command
     {
         if ($this->option('sql') && $this->option('skip')) {
             $this->generateSql();
+
+            return 0;
         }
 
         foreach (static::$models as $model => $bool) {
@@ -80,9 +83,11 @@ class GenerateSeedData extends Command
 
         $coursesCsv = array_map('str_getcsv', file(base_path().'/database/seeders/_csv/ub-courses.csv'));
         $sectionsCsv = array_map('str_getcsv', file(base_path().'/database/seeders/_csv/ub-sections.csv'));
+        $sectionsOldSrv = array_map('str_getcsv', file(base_path().'/database/seeders/_csv/ub-sections.old.csv'));
 
         array_shift($coursesCsv);
         array_shift($sectionsCsv);
+        array_shift($sectionsOldSrv);
 
         $this->withProgressBar($coursesCsv, function ($data) {
             $this->addCourse($data);
@@ -90,13 +95,33 @@ class GenerateSeedData extends Command
         $this->newLine();
 
 
-        $this->withProgressBar($sectionsCsv, function ($data) {
+        $count = 0;
+        $this->withProgressBar($sectionsCsv, function ($data) use ($count) {
+            if (count($data) === 1) {
+                $this->error($count);
+                die();
+            }
             $this->addSection($data);
+
+            $count++;
+        });
+        $this->newLine();
+
+        $count = 0;
+        $this->withProgressBar($sectionsOldSrv, function ($data) use ($count) {
+            if (count($data) === 1) {
+                $this->error($count);
+                die();
+            }
+            $this->addSection($data);
+
+            $count++;
         });
         $this->newLine();
 
         foreach (static::$models as $model => $convertToArray) {
-            $this->saveFile($model.'.json', $convertToArray ? array_values($this->data[$model]) : $this->data[$model]);
+            $this->data['converted-'.$model] = $convertToArray ? array_values($this->data[$model]) : $this->data[$model];
+            $this->saveFile($model.'.json', $this->data['converted-'.$model]);
         }
 
         if ($this->option('sql')) {
@@ -109,7 +134,143 @@ class GenerateSeedData extends Command
 
     public function generateSql()
     {
-        // todo:
+        if ($this->option('skip')) {
+            foreach (array_keys(static::$models) as $model) {
+                $this->data['converted-'.$model] = json_decode(file_get_contents(base_path().'/database/seeders/_json/'.$model.'.json'), true);
+            }
+        }
+
+        $dir = base_path().'/database/seeders/_json/_queries/';
+        $insertQueryColumns = [];
+        $jsonModelColumns = [];
+
+        $models = [
+            'departments' => [],
+            'courses'     => [
+                'name',
+                'name_shorthand',
+                'number',
+                'description',
+                'credits' => 'credits.max',
+                'department_id',
+            ],
+            'sections'    => [
+                'number',
+                'seats',
+                'start_date' => 'start_timestamp',
+                'end_date'   => 'end_timestamp',
+                'faculty'    => 'faculty_names',
+                'course_id',
+                'catalog_id' => 'term_id',
+            ],
+            'schedules'   => [
+                'course_section_id' => 'section_id',
+                'type',
+                'start_time',
+                'end_time',
+                'days',
+                'is_online',
+                'building_id',
+                'room',
+            ],
+            'terms'       => [],
+            'locations'   => [],
+            'buildings'   => [],
+        ];
+
+        $tableMappings = [
+            'sections'  => 'course_sections',
+            'schedules' => 'course_section_schedules',
+            'terms'     => 'catalogs',
+        ];
+
+        $insertTemplates = [];
+        $insertTemplate = 'insert into `%s` %s';
+
+        foreach ($models as $model => $columnData) {
+            if (empty($columnData)) {
+                $columnData = array_keys($this->data['converted-'.$model][0]);
+            }
+
+            $insertQueryColumns[$model] = [];
+            $jsonModelColumns[$model] = [];
+
+            foreach ($columnData as $k => $v) {
+                $insertQueryColumns[$model][] = is_int($k) ? $v : $k;
+                $jsonModelColumns[$model][is_int($k) ? $v : $k] = $v;
+
+            }
+
+            $insertTemplates[$model] = sprintf($insertTemplate, $tableMappings[$model] ?? $model, '(`'.implode('`, `', $insertQueryColumns[$model]).'`)');
+        }
+
+        foreach ($models as $model => $columnData) {
+            $data = $this->data['converted-'.$model];
+            $this->data['sqlQueries-'.$model] = [];
+
+            $this->withProgressBar($data, function ($row) use ($jsonModelColumns, $model, $insertTemplates, $insertQueryColumns, $insertTemplate, $tableMappings) {
+//                if ($model === 'schedules') {
+//                    if ($row['is_online']) {
+//                        return;
+//                    }
+//                }
+
+                $values = [];
+                $keyMappings = $jsonModelColumns[$model];
+
+                foreach ($keyMappings as $tableColumn => $jsonColumn) {
+                    $val = data_get($row, $jsonColumn);
+
+                    if (Str::contains($jsonColumn, '_timestamp')) {
+                        $val = (new DateTime)->setTimestamp($val)->format('Y-m-d');
+                    }
+
+                    if ($jsonColumn === 'faculty_names') {
+                        if (empty($val)) {
+                            $val = null;
+                        } else {
+                            $val = implode(',', $val);
+                        }
+                    }
+
+                    $values[] = $val;
+                }
+
+                if ($model === 'terms') {
+                    $values[] = $values[3] === 2021;
+
+                    $this->data['sqlQueries-'.$model][] = sprintf($insertTemplate, $tableMappings[$model] ?? $model, '(`'.implode('`, `', array_merge($insertQueryColumns[$model], ['is_active'])).'`)').' values('.static::parseSqlValues($values).')';
+
+                    return;
+                }
+
+                $this->data['sqlQueries-'.$model][] = $insertTemplates[$model].' values('.static::parseSqlValues($values).')';
+            });
+
+            file_put_contents($dir.($tableMappings[$model] ?? $model).'.json', json_encode($this->data['sqlQueries-'.$model], JSON_PRETTY_PRINT));
+
+            $this->newLine();
+        }
+    }
+
+    protected static function parseSqlValues($values)
+    {
+        return implode(', ', array_map(function ($val) {
+            if (is_int($val) || is_null($val)) {
+                if (is_null($val)) {
+                    return 'null';
+                }
+
+                return $val;
+            } elseif (is_array($val)) {
+                return "'".json_encode($val)."'";
+            } elseif (is_bool($val)) {
+                return (int) $val;
+//                return var_export($val, true);
+            } else {
+                return "'".addslashes($val)."'";
+            }
+        }, $values));
     }
 
     public function addCourse($raw, $return = false)
@@ -144,9 +305,11 @@ class GenerateSeedData extends Command
             $course['academic_level'] = $raw[4];
 
             foreach (static::explodeTrim($raw[5], ';') as $location) {
-                $location = $this->addLocation($location, true);
-                $course['location_ids'][] = $location['id'];
-                $course['location_names'][] = $location['name'];
+                if (!empty($location)) {
+                    $location = $this->addLocation($location, true);
+                    $course['location_ids'][] = $location['id'];
+                    $course['location_names'][] = $location['name'];
+                }
             }
 
             $department = $this->addDepartment($raw[3], $parsed_shorthand['department_prefix'], true);
@@ -167,11 +330,17 @@ class GenerateSeedData extends Command
 
     public function addSection($raw, $return = false)
     {
+        if (!isset($raw[2])) {
+            var_dump($raw);
+            die();
+            return;
+        }
+
         $name_shorthand = $raw[2];
 
         $parsed_shorthand = static::parseShorthandName($name_shorthand);
 
-        $hash = md5($raw[2].'-'.$raw[8]);
+        $hash = md5($raw[2].$raw[8].$raw[10]);
 
         if (!isset($this->cacheCheck['sections'][$hash])) {
             $section = [
@@ -190,6 +359,8 @@ class GenerateSeedData extends Command
                 'department_name' => null,
                 'course_id'       => null,
                 'course_name'     => null,
+                'location_id'     => null,
+                'location_name'   => null,
                 'schedule_ids'    => [],
             ];
 
@@ -198,9 +369,19 @@ class GenerateSeedData extends Command
             $section['number'] = $raw[4];
             $section['seats'] = !empty($raw[21]) && $raw[21] != 0 ? (int) $raw[21] : null;
 
+
             $times = explode('-', $raw[9]);
             $section['start_timestamp'] = strtotime($times[0]);
             $section['end_timestamp'] = strtotime($times[1]);
+
+//            if (!isset($this->cacheCheck['test'])) {
+//                $this->newLine();
+//                $this->info('dates: '. $raw[9]);
+//                $this->info('start: '. $times[0].' / '.$section['start_timestamp']);
+//                $this->info('end: '. $times[1].' / '.$section['start_timestamp']);
+//                $this->cacheCheck['test'] = true;
+//            }
+
 
 //            $section['types'] = static::explodeTrim($raw[15]);
             $section['notes'] = $raw[28] ?: null;
@@ -219,7 +400,11 @@ class GenerateSeedData extends Command
             $section['course_id'] = $course['id'];
             $section['course_name'] = $course['name'];
 
-            // schedules
+            if (!empty($raw[7])) {
+                $location = $this->addLocation($raw[7], true);
+                $section['location_id'] = $location['id'];
+                $section['location_name'] = $location['name'];
+            }
             $section['schedule_ids'] = $this->parseAndAddSchedules($section['id'], $raw[10], $raw[11], $raw[12], $raw[13], $raw[14]);
 
             $this->data['sections'][] = $section;
@@ -404,14 +589,6 @@ class GenerateSeedData extends Command
 
         $schedulesToReturn = [];
 
-        $lengths = [
-            'meeting_times' => count($meeting_times),
-            'days'          => count($days),
-            'buildings'     => count($buildings),
-            'rooms'         => count($rooms),
-            'types'         => count($types),
-        ];
-
         // section/schedule is online
         if ($is_online = static::checkIfOnline($meeting_times, $days, $buildings, $rooms, $types)) {
             $schedule = static::getScheduleTemplate();
@@ -506,9 +683,9 @@ class GenerateSeedData extends Command
             return true;
         }
 
-        if (empty($buildings) && empty($rooms)) {
-            return true;
-        }
+//        if (empty($buildings) && empty($rooms)) {
+//            return true;
+//        }
 
         if (isset($types[0]) && $types[0] === 'Online') {
             return true;
@@ -533,7 +710,7 @@ class GenerateSeedData extends Command
             'type'          => 'Lecture',
             'start_time'    => null,
             'end_time'      => null,
-            'days'          => [],
+            'days'          => null,
             'is_online'     => false,
             'building_id'   => null,
             'building_name' => null,
@@ -642,6 +819,11 @@ class GenerateSeedData extends Command
 //            'section_name_shorthand' => 'MEEG-112-11',
 //        ]
         $exploded = explode('-', $shorthand);
+
+        if (!isset($exploded[1])) {
+            print_r($shorthand);
+            die();
+        }
 
         return [
             'department_prefix'      => $exploded[0],

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class CourseSection extends Model
 {
@@ -22,7 +24,7 @@ class CourseSection extends Model
 
     public function catalog()
     {
-        return $this->belongsTo(Catalog::class, 'term_id');
+        return $this->belongsTo(Catalog::class);
     }
 
     public function schedule()

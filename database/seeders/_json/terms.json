@@ -26,167 +26,173 @@
     {
         "id": 5,
         "name": null,
-        "semester": "Summer",
+        "semester": "Fall",
         "year": 2021
     },
     {
         "id": 6,
         "name": null,
+        "semester": "Summer",
+        "year": 2021
+    },
+    {
+        "id": 7,
+        "name": null,
         "semester": "Spring",
         "year": 2017
     },
     {
-        "id": 7,
+        "id": 8,
         "name": "Nutrition",
         "semester": "Fall",
         "year": 2016
     },
     {
-        "id": 8,
-        "name": "Nutrition",
-        "semester": "Spring",
-        "year": 2017
-    },
-    {
         "id": 9,
         "name": "Nutrition",
-        "semester": "Summer",
+        "semester": "Spring",
         "year": 2017
     },
     {
         "id": 10,
         "name": "Nutrition",
+        "semester": "Summer",
+        "year": 2017
+    },
+    {
+        "id": 11,
+        "name": "Nutrition",
         "semester": "Spring",
         "year": 2021
     },
     {
-        "id": 11,
+        "id": 12,
         "name": "Nutrition",
         "semester": "Summer",
         "year": 2021
     },
     {
-        "id": 12,
-        "name": "Health Sciences",
-        "semester": "Spring",
+        "id": 13,
+        "name": "Nutrition",
+        "semester": "Fall",
         "year": 2021
     },
     {
-        "id": 13,
-        "name": "HS",
-        "semester": "Fall",
-        "year": 2016
-    },
-    {
         "id": 14,
-        "name": null,
-        "semester": "Fall",
+        "name": "Health Sciences",
+        "semester": "Spring",
         "year": 2021
     },
     {
         "id": 15,
         "name": "HS",
-        "semester": "Spring",
-        "year": 2017
+        "semester": "Fall",
+        "year": 2016
     },
     {
         "id": 16,
-        "name": null,
+        "name": "HS",
         "semester": "Spring",
-        "year": 2019
+        "year": 2017
     },
     {
         "id": 17,
         "name": null,
         "semester": "Spring",
-        "year": 2018
+        "year": 2019
     },
     {
         "id": 18,
+        "name": null,
+        "semester": "Spring",
+        "year": 2018
+    },
+    {
+        "id": 19,
         "name": "Health Sciences",
         "semester": "Fall",
         "year": 2021
     },
     {
-        "id": 19,
+        "id": 20,
         "name": "Health Sciences",
         "semester": "Summer",
         "year": 2021
     },
     {
-        "id": 20,
+        "id": 21,
         "name": "HS",
         "semester": "Summer",
         "year": 2017
     },
     {
-        "id": 21,
-        "name": "Eli",
-        "semester": "Fall",
-        "year": 2021
-    },
-    {
         "id": 22,
         "name": "Eli",
-        "semester": "Spring",
+        "semester": "Fall",
         "year": 2021
     },
     {
         "id": 23,
         "name": "Eli",
-        "semester": "Summer",
+        "semester": "Spring",
         "year": 2021
     },
     {
         "id": 24,
-        "name": "Pa",
-        "semester": "Spring",
+        "name": "Eli",
+        "semester": "Summer",
         "year": 2021
     },
     {
         "id": 25,
         "name": "Pa",
-        "semester": "Summer",
+        "semester": "Spring",
         "year": 2021
     },
     {
         "id": 26,
+        "name": "Pa",
+        "semester": "Summer",
+        "year": 2021
+    },
+    {
+        "id": 27,
         "name": "PA",
         "semester": "Spring",
         "year": 2017
     },
     {
-        "id": 27,
+        "id": 28,
         "name": "Pa",
         "semester": "Fall",
         "year": 2021
     },
     {
-        "id": 28,
+        "id": 29,
         "name": "Intersession",
         "semester": "Winter",
         "year": null
     },
     {
-        "id": 29,
+        "id": 30,
         "name": "PA",
         "semester": "Summer",
         "year": 2017
     },
     {
-        "id": 30,
+        "id": 31,
         "name": "Eli",
         "semester": "Fall",
         "year": 2016
     },
     {
-        "id": 31,
+        "id": 32,
         "name": "Eli",
         "semester": "Spring",
         "year": 2017
     },
     {
-        "id": 32,
+        "id": 33,
         "name": "Eli",
         "semester": "Summer",
         "year": 2017

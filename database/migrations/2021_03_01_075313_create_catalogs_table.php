@@ -18,7 +18,8 @@ class CreateCatalogsTable extends Migration
             $table->string('name')->nullable();
             $table->string('name_full')->virtualAs('concat_ws(\' \', name, concat(upper(substring(semester, 1, 1)), substring(semester, 2)), year)');
             $table->enum('semester', ['spring', 'summer', 'fall', 'winter']);
-            $table->year('year');
+            $table->year('year')->nullable();
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }

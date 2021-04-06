@@ -1,0 +1,15 @@
+[
+    "insert into `buildings` (`id`, `name`) values(1, 'Mandeville Hall')",
+    "insert into `buildings` (`id`, `name`) values(2, 'Arnold Bernhard Arts-Hum Cntr')",
+    "insert into `buildings` (`id`, `name`) values(3, 'Wahlstrom Library')",
+    "insert into `buildings` (`id`, `name`) values(4, 'Eleanor N. Dana Hall')",
+    "insert into `buildings` (`id`, `name`) values(5, 'Health Science Center')",
+    "insert into `buildings` (`id`, `name`) values(6, 'Chiropractic College')",
+    "insert into `buildings` (`id`, `name`) values(7, 'Engineering-Technology Bldg')",
+    "insert into `buildings` (`id`, `name`) values(8, 'Carlson Hall')",
+    "insert into `buildings` (`id`, `name`) values(9, 'Dana Hall of Science')",
+    "insert into `buildings` (`id`, `name`) values(10, 'Bates Hall')",
+    "insert into `buildings` (`id`, `name`) values(11, 'Cooper Hall')",
+    "insert into `buildings` (`id`, `name`) values(12, 'South Hall')",
+    "insert into `buildings` (`id`, `name`) values(13, 'Wheeler Recreation Center')"
+]

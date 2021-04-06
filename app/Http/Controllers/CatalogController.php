@@ -13,7 +13,7 @@ class CatalogController
         /**
          * @var \Illuminate\Pagination\Paginator $catalogs
          */
-        $catalogs = Catalog::latest('start')->paginate(15);
+        $catalogs = Catalog::where('is_active', 1)->orderBy('semester')->paginate(15);
 
 //        dd(compact('catalogs'));
 

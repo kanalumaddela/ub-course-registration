@@ -9,6 +9,14 @@ class StudentRegistration extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
+    protected $fillable = [
+        'user_id',
+        'course_section_id',
+        'status',
+    ];
+
     public function student()
     {
         return $this->belongsTo(User::class);

@@ -24,4 +24,9 @@ class Course extends Model
     {
         return $this->hasMany(CourseSection::class);
     }
+
+    public function schedules()
+    {
+        return $this->hasManyThrough(CourseSectionSchedule::class, CourseSection::class);
+    }
 }
