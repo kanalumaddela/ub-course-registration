@@ -19019,7 +19019,8 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     courses: Object,
     departmentsCoursesCount: Array,
-    catalogsCoursesCount: Array
+    catalogsCoursesCount: Array,
+    studentRegistrations: Object
   },
   data: function data() {
     return {
@@ -49365,7 +49366,11 @@ var render = function() {
                                                 "text-white bg-blue-600 border-blue-600 hover:text-blue-600 hover:bg-white",
                                                 "text-white bg-red-600 border-red-600 hover:text-red-600 hover:bg-white"
                                               ],
-                                              "initial-state": 0
+                                              "initial-state": Number(
+                                                _vm.studentRegistrations[
+                                                  section.id
+                                                ] !== undefined
+                                              )
                                             }
                                           })
                                         ],

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Course;
+use App\Models\StudentRegistration;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -23,6 +24,22 @@ class SearchController
 //        dd(static::getQuery()->toSql());
 
         $courses = static::getQuery()->paginate(static::RESULTS_PER_PAGE);
+
+        $studentRegistrations = auth()
+            ->user()
+            ->registrations()
+            ->join('course_sections', 'course_sections.id', 'student_registrations.course_section_id')
+            ->join('catalogs', 'catalogs.id', 'course_sections.catalog_id')
+            ->where('catalogs.is_active', 1)
+            ->get()
+            ->pluck('course_section_id', 'user_id');
+
+        if (count($studentRegistrations) > 0) {
+            $studentRegistrations = array_flip($studentRegistrations->toArray());
+        }
+
+
+//        dd($studentRegistrations);
 
 //        dd($courses[0]);
 
@@ -84,7 +101,7 @@ class SearchController
         return Course::select('courses.*')
             ->with([
                 'department',
-                'sections' => function($query) {
+                'sections'          => function ($query) {
                     $query
                         ->select('course_sections.*')
                         // course_sections.seats -
@@ -99,7 +116,7 @@ class SearchController
                         ->join('catalogs', 'course_sections.catalog_id', '=', 'catalogs.id')
                         ->where('catalogs.is_active', true);
                 },
-                'sections.schedule.building'
+                'sections.schedule.building',
             ])
             ->join('course_sections', 'courses.id', '=', 'course_sections.course_id')
             ->join('course_section_schedules', 'course_sections.id', '=', 'course_section_schedules.course_section_id')

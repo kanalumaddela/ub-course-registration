@@ -60,7 +60,7 @@
                                                            :toggle-data="[{type: 'register'}, {type: 'unregister'}]"
                                                            :toggle-text="['Add Section to your schedule', 'Remove section from schedule']"
                                                            :toggle-class="['text-white bg-blue-600 border-blue-600 hover:text-blue-600 hover:bg-white', 'text-white bg-red-600 border-red-600 hover:text-red-600 hover:bg-white']"
-                                                           :initial-state="0"
+                                                           :initial-state="Number(studentRegistrations[section.id] !== undefined)"
                                                            class="px-3 py-1 rounded border">
                                             </action-button>
                                         </div>
@@ -147,6 +147,7 @@ export default {
         courses: Object,
         departmentsCoursesCount: Array,
         catalogsCoursesCount: Array,
+        studentRegistrations: Object,
     },
     data() {
         return {
