@@ -14,7 +14,7 @@ class RegisterController extends Controller
 {
     public function register(CourseSection $courseSection, Request $request)
     {
-//        $this->authorize('register-for-classes');
+        $this->authorize('register-for-classes');
 
 
 //        return \response()->json(['success' => $request->get('success', false), 'message' => $request->get('success', false) ? 'success message' : 'failed message']);

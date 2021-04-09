@@ -16,7 +16,7 @@ class CreateStudentRegistrationsTable extends Migration
         Schema::create('student_registrations', function (Blueprint $table) {
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('course_section_id');
-            $table->enum('status', ['pending', 'approved', 'denied', 'planned']);
+            $table->enum('status', ['pending', 'approved', 'denied', 'planned', 'registered']);
 
             $table->unique(['user_id', 'course_section_id']);
         });

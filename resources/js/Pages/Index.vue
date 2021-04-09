@@ -31,11 +31,11 @@ export default {
             calendarOptions: {
                 plugins: [dayGridPlugin, timeGridPlugin],
                 initialView: 'timeGridWeek',
-                views: {
-                    timeGrid: {
-                        allDaySlot: false
-                    }
-                },
+                // views: {
+                //     timeGrid: {
+                //         allDaySlot: false
+                //     }
+                // },
                 headerToolbar: {
                     left: 'dayGridMonth,timeGridWeek,timeGridDay',
                     center: 'title',

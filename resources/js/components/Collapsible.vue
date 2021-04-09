@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="relative" :class="headerClasses" @click="openContent">
+        <div class="relative cursor-pointer" :class="headerClasses" @click="toggleOpen">
             <div class="flex items-center">
-                <div class="flex-grow cursor-pointer">
+                <div class="flex-grow">
                     <slot name="header"></slot>
                 </div>
                 <svg class="w-8 transform" :class="{'rotate-180': open}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -20,10 +20,9 @@
 export default {
     name: "Collapsible",
     props: {
-        // open: {
-        //     type: Boolean,
-        //     default: false,
-        // },
+        startOpen: {
+            type: Boolean,
+        },
         headerClasses: {
             type: String,
             default: 'p-3 bg-gray-200'
@@ -39,13 +38,18 @@ export default {
         }
     },
     methods: {
-        openContent() {
+        toggleOpen() {
             this.open = !this.open;
         }
     },
     computed: {
         getContentClasses() {
             return this.contentClasses + (this.open ? '' : ' hidden');
+        }
+    },
+    mounted() {
+        if (this.startOpen) {
+            this.toggleOpen();
         }
     }
 }

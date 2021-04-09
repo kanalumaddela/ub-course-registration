@@ -39,7 +39,8 @@
             },
             contentClasses: {
                 default: () => ['py-1', 'bg-white']
-            }
+            },
+            triggerClasses: {}
         },
 
         data() {
@@ -66,6 +67,8 @@
             widthClass() {
                 return {
                     '48': 'w-48',
+                    '80': 'w-80',
+                    '96': 'w-96',
                 }[this.width.toString()]
             },
 
@@ -74,10 +77,16 @@
                     return 'origin-top-left left-0'
                 } else if (this.align === 'right') {
                     return 'origin-top-right right-0'
+                } else if (this.align === 'center') {
+                    return 'origin-top left-1/2 transform-gpu -translate-x-1/2';
                 } else {
                     return 'origin-top'
                 }
             },
+
+            triggerClass() {
+                return this.open ? this.triggerClasses : '';
+            }
         }
     }
 </script>

@@ -32,6 +32,18 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 // new dashboard
 Route::get('/new', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
 
+// notifications
+Route::get('/notification/{notification}', function (\Illuminate\Notifications\DatabaseNotification $notification) {
+    if ($notification->type === \App\Notifications\TestNotification::class && $notification->unread()) {
+        $notification->markAsRead();
+    }
+
+    dump($notification);
+    dd($notification->data);
+
+//    return redirect($notification->data['url']);
+})->name('notifications');
+
 // all courses
 Route::get('/search', \App\Http\Controllers\SearchController::class)->name('search');
 
@@ -55,6 +67,16 @@ Route::get('/catalogs/{catalog}', [\App\Http\Controllers\CatalogController::clas
 
 
 Route::group(['prefix' => '/test'], function () {
+    Route::get('/send-notification', function () {
+        auth()->user()->notify(new \App\Notifications\TestNotification);
+    });
+    Route::get('/notifications', function () {
+        $user = auth()->user();
+
+        dump($user->notifications);
+        dd($user->unreadNotifications);
+    });
+
     Route::get('/departments', function () {
         $departments = \App\Models\Department::withCount('courses')->orderBy('name', 'asc')->paginate(20);
 

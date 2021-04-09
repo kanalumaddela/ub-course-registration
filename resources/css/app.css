@@ -1,7 +1,6 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-/*@import '~tui-calendar/dist/tui-calendar.css';*/
 
 body {
     overflow-y: scroll;

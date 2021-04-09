@@ -33,8 +33,43 @@
                 </div>
 
                 <!-- Right Side -->
-                <div class="">
-                    <!-- Profile/Notifications -->
+                <div class="flex">
+                    <!-- Notifications -->
+                    <jet-dropdown width="96" align="center" trigger-classes="bg-purple-900" content-classes="bg-white">
+                        <template #trigger>
+                            <button class="p-1 rounded-full text-gray-300 hover:text-white focus:text-white focus:outline-none focus:bg-purple-900">
+                                <span class="sr-only">View notifications</span>
+                                <!-- Heroicon name: outline/bell -->
+                                <div class="relative">
+                                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                    </svg>
+                                    <span v-if="$page.props.user.notifications.unreadCount" class="absolute -top-2.5 -right-2.5 h-5 w-5 leading-5 text-xs rounded-full text-white bg-red-600">{{ $page.props.user.notifications.unreadCount }}</span>
+                                </div>
+                            </button>
+                        </template>
+                        <template #content>
+                            <div class="block text-gray-400">
+                                <div class="py-2 px-4 flex justify-end">
+                                    <a href="#" class="px-2 py-1 rounded-tl rounded-bl text-center bg-red-500 text-white">Clear all</a>
+                                    <a href="#" class="px-2 py-1 rounded-tr rounded-br text-center bg-purple-800 text-white">Mark all read</a>
+                                </div>
+                                <hr>
+
+                                <div v-for="(item, index) in $page.props.user.notifications.all" :key="`notification-${item.id}`">
+                                    <div class="py-3 px-4" :class="{'font-bold': !item.read_at}">
+                                        <span v-if="!item.read_at" class="px-2 py-0.5 rounded bg-green-500 text-white">New</span>
+                                        <a :href="route('notifications', item.id)" class="hover:underline">
+                                            {{ item.data.text }}
+                                        </a>
+                                    </div>
+                                    <hr v-if="index < 4">
+                                </div>
+                            </div>
+                        </template>
+                    </jet-dropdown>
+
+                    <!-- Profile -->
                     <jet-dropdown align="right" v-if="$page.props.user">
                         <template #trigger>
                             <span class="inline-flex rounded-md">

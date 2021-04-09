@@ -47,12 +47,16 @@ export default {
         initialState: {
             type: Number,
             default: 0,
+        },
+        internalData: {
+            type: Object,
         }
     },
     data() {
         return {
             success: null,
             currentState: null,
+            data: {}
         }
     },
     computed: {
@@ -82,6 +86,8 @@ export default {
             axios[method](this.action, data)
                 .then(res => {
                     this.success = res.data.success;
+                    this.data = res.data;
+
                     if (this.success) {
                         this.toggleCurrentState();
                     } else {
@@ -92,6 +98,7 @@ export default {
                     console.error(err)
                 })
                 .finally(_ => {
+                    this.$emit('state-changed');
                     this.$el.disabled = false;
                 });
         }

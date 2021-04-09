@@ -38,6 +38,10 @@ class IndexController
                 $calendarMaxTime = $res['max_time'];
 
                 $schedules = static::generateCalendarData($schedules);
+
+//                $schedules = [$schedules[2]];
+
+//                dd($schedules);
             }
         }
 
@@ -66,12 +70,17 @@ class IndexController
 
 
         foreach ($schedules as $schedule) {
-//            $days = json_decode($schedule['days'], true);
-            $days = explode(' ', $schedule['days']);
+//            if ($schedule['course_name_full'] === 'TMPD-694-A') {
+//                dd($schedule);
+//            }
 
-            $event = [
-                'days' => [],
-            ];
+            $days = !empty($schedule['days']) ? explode(' ', $schedule['days']) : null;
+
+            $event = [];
+
+            if (empty($schedule['start_time'])) {
+                $event['allDay'] = true;
+            }
 
             $event['id'] = $counter;
             $event['title'] = $schedule['course_name_full'];
@@ -91,7 +100,6 @@ class IndexController
                     $event['daysOfWeek'][] = $mappings[$day];
                 }
             }
-
 
             $data[] = $event;
 

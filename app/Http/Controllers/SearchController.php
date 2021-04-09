@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\StudentRegistration;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -13,30 +14,45 @@ class SearchController
 {
     const RESULTS_PER_PAGE = 25;
 
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-//        DB::connection()->enableQueryLog();
-//        $courses = Course::with('schedules')->limit(5)->get();
-//
-//        dump(DB::connection()->getQueryLog());
+        $coursesQuery = static::getQuery();
+
+        $searchParams = [
+            'departments' => $request->query('departments', ''),
+        ];
+
+        $filterCheckboxes = [];
+
+        foreach ($searchParams as $model => $query) {
+           $query = array_filter(explode(',', $query));
+
+            $filterCheckboxes[$model] = $query;
+
+           if (!empty($query)) {
+               switch ($model) {
+                   case 'departments':
+                       $coursesQuery->whereIn('courses.department_id', $query);
+                       break;
+               }
+           }
+        }
+
+//        dd($filterCheckboxes);
+
+        $courses = $coursesQuery->paginate(static::RESULTS_PER_PAGE)->withQueryString();
+
 //        dd($courses);
-
-//        dd(static::getQuery()->toSql());
-
-        $courses = static::getQuery()->paginate(static::RESULTS_PER_PAGE);
 
         $studentRegistrations = auth()
             ->user()
             ->registrations()
+            ->select('student_registrations.*', 'courses.id as course_id')
             ->join('course_sections', 'course_sections.id', 'student_registrations.course_section_id')
+            ->join('courses', 'courses.id', 'course_sections.course_id')
             ->join('catalogs', 'catalogs.id', 'course_sections.catalog_id')
             ->where('catalogs.is_active', 1)
-            ->get()
-            ->pluck('course_section_id', 'user_id');
-
-        if (count($studentRegistrations) > 0) {
-            $studentRegistrations = array_flip($studentRegistrations->toArray());
-        }
+            ->get()->toArray();
 
 
 //        dd($studentRegistrations);
@@ -55,16 +71,19 @@ class SearchController
 
 //        dd($courses[0]);
 
-//        $departmentsCoursesCount = DB::table('departments')
-//            ->select('departments.id', 'departments.name', DB::raw('count(departments.id) as course_count'))
-//            ->join('courses', 'departments.id', '=', 'courses.department_id')
-//            ->join('course_sections', 'courses.id', '=', 'course_sections.course_id')
-//            ->join('catalogs', 'catalogs.id', '=', 'course_sections.catalog_id')
-//            ->join('course_section_schedules', 'course_sections.id', '=', 'course_section_schedules.course_section_id')
-//            ->where('catalogs.is_active', true)
-//            ->groupBy('departments.name', 'departments.id')
-//            ->orderBy('departments.name')
-//            ->get();
+        $departmentsCoursesCount = DB::table('departments')
+            ->select('departments.id', 'departments.name', DB::raw('count(departments.id) as section_count'))
+            ->join('courses', 'departments.id', '=', 'courses.department_id')
+            ->join('course_sections', 'courses.id', '=', 'course_sections.course_id')
+            ->join('course_section_schedules', 'course_sections.id', '=', 'course_section_schedules.course_section_id')
+            ->join('catalogs', 'catalogs.id', '=', 'course_sections.catalog_id')
+            ->where('catalogs.is_active', 1)
+            ->groupBy('departments.name', 'departments.id')
+            ->orderBy('departments.name')
+            ->distinct('courses.name_shorthand')
+            ->get();
+
+//        dd($departmentsCoursesCount);
 
 //        $catalogsCoursesCount = DB::table('catalogs')
 //            ->select('catalogs.id', 'catalogs.name_full', DB::raw('count(catalogs.id) as course_count'))
@@ -121,7 +140,7 @@ class SearchController
             ->join('course_sections', 'courses.id', '=', 'course_sections.course_id')
             ->join('course_section_schedules', 'course_sections.id', '=', 'course_section_schedules.course_section_id')
             ->join('catalogs', 'course_sections.catalog_id', '=', 'catalogs.id')
-            ->where('catalogs.is_active', true)
+            ->where('catalogs.is_active', 1)
             ->orderBy('courses.name_shorthand')
             ->distinct('courses.name_shorthand');
     }

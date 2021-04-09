@@ -5,32 +5,44 @@
             <div class="grid lg:grid-cols-4 gap-4">
                 <div class="col-span-full lg:col-span-1">
                     <div class="p-4 sm:rounded bg-white">
-                        <h1 class="font-bold text-xl">Filter Results</h1>
-                        <jet-button>
-                            Apply
-                        </jet-button>
+                        <h1 class="font-bold text-xl mb-3">Filter Results</h1>
+                        <collapsible header-classes="py-1 px-3 bg-gray-200" content-classes="" :start-open="true">
+                            <template #header>
+                                <h1>Department(s)</h1>
+                            </template>
+
+                            <div class="grid gap-y-1 max-h-40 overflow-auto">
+                                <label v-for="dep in departmentsCoursesCount" class="flex items-center space-x-2 p-1" :key="`search-department-${dep.id}`">
+                                    <input v-model="filterCheckboxes.departments" type="checkbox" :value="dep.id" class="form-tick appearance-none h-6 w-6 border border-gray-300 rounded-md checked:bg-blue-600 checked:border-transparent focus:outline-none">
+                                    <span class="text-gray-900 font-medium">{{ dep.name + ` (${dep.section_count})` }}</span>
+                                </label>
+                            </div>
+                        </collapsible>
+                        <div class="my-3"></div>
+                        <div class="text-right">
+                            <inertia-link :href="searchFilterUri" preserve-state>
+                                <jet-button type="button">
+                                    Apply
+                                </jet-button>
+                            </inertia-link>
+                        </div>
                     </div>
                 </div>
                 <div class="col-span-full lg:col-span-3">
                     <pagination class="shadow" :paginator="courses"></pagination>
                     <div class="grid gap-y-2">
-                        <card classes="p-4 sm:rounded bg-white" v-for="course in courses.data" :data="course"
-                              :key="'course-' + course.id">
+                        <card classes="relative p-4 sm:rounded bg-white" v-for="course in courses.data" :data="course" :key="'course-' + course.id">
+                            <span v-if="studentRegistrationsMappings.courses[course.id]" class="absolute top-1.5 right-1.5 py-1 px-3 rounded shadow" :class="`course-${studentRegistrationsMappings.courses[course.id]}`">
+                                {{ capitalize(studentRegistrationsMappings.courses[course.id]) }}
+                            </span>
                             <div class="flex items-center">
                                 <div class="flex-grow">
                                     <h1 class="text-xl font-bold">
-                                        [{{ course.name_shorthand }}] {{
-                                            course.name
-                                        }}{{
-                                            course.credits ? ` - (${course.credits + (course.credits > 1 ? ' Credits' : ' Credit')})` : ''
-                                        }}
+                                        [{{ course.name_shorthand }}] {{ course.name }}
+                                        {{ course.credits ? ` - (${course.credits + (course.credits > 1 ? ' Credits' : ' Credit')})` : '' }}
                                     </h1>
                                     <p>{{ course.department.name }}</p>
                                 </div>
-<!--                                <button-->
-<!--                                    class="self-start px-3 py-1 rounded border border-blue-600 text-blue-600 transition-colors hover:bg-blue-600 hover:text-white">-->
-<!--                                    Add Course to your schedule-->
-<!--                                </button>-->
                             </div>
                             <div class="text-sm text-gray-500">
                                 <p v-if="course.description">
@@ -43,7 +55,7 @@
                             <hr class="my-2"/>
                             <div>
                                 <collapsible class="border border-gray-200">
-                                    <template #header>
+                                    <template #header class="cursor-pointer">
                                         <h1>View available sections ({{ getRealSectionCount(course.sections) }})</h1>
                                     </template>
 
@@ -60,7 +72,8 @@
                                                            :toggle-data="[{type: 'register'}, {type: 'unregister'}]"
                                                            :toggle-text="['Add Section to your schedule', 'Remove section from schedule']"
                                                            :toggle-class="['text-white bg-blue-600 border-blue-600 hover:text-blue-600 hover:bg-white', 'text-white bg-red-600 border-red-600 hover:text-red-600 hover:bg-white']"
-                                                           :initial-state="Number(studentRegistrations[section.id] !== undefined)"
+                                                           :initial-state="Number(studentRegistrationsMappings.sections[section.id] !== undefined)"
+                                                           @state-changed="updateRegistrationBadge(section.id, section.course_id)"
                                                            class="px-3 py-1 rounded border">
                                             </action-button>
                                         </div>
@@ -120,6 +133,10 @@
                 </div>
             </div>
         </div>
+
+        <modal :show="false">
+            <h1>modal content test</h1>
+        </modal>
     </site-layout>
 </template>
 
@@ -131,10 +148,12 @@ import Collapsible from "@/components/Collapsible";
 import JetButton from "@/Jetstream/Button";
 import JetInput from "@/Jetstream/Input";
 import ActionButton from "@/components/ActionButton";
+import Modal from "@/Jetstream/Modal";
 
 export default {
     name: "Search",
     components: {
+        Modal,
         ActionButton,
         JetInput,
         JetButton,
@@ -147,48 +166,92 @@ export default {
         courses: Object,
         departmentsCoursesCount: Array,
         catalogsCoursesCount: Array,
-        studentRegistrations: Object,
+        studentRegistrations: Array,
+        filterCheckboxes: Object
     },
     data() {
         return {
-            seatDisplayed: false,
-            registerSectionId: null,
+            studentRegistrationsMappings: {
+                courses: [],
+                sections: [],
+                coursesSections: {},
+            }
+        }
+    },
+    computed: {
+        searchFilterUri() {
+            return '?' + this.encodeUriObject(this.filterCheckboxes);
         }
     },
     methods: {
+        encodeUriObject(obj) {
+            let uri = '';
+
+            for (let key in obj) {
+                if (uri !== '') {
+                    uri += '&';
+                }
+
+                uri += key + '=' + encodeURIComponent(obj[key]);
+            }
+
+            return uri;
+        },
         getRealSectionCount(sections) {
             return sections
                 .filter(s => s.schedule.length > 0)
                 .length;
         },
-        registerSection(ev) {
-            let target = ev.target;
-            target.disabled = true;
-            const action = route('register.section', target.dataset.id)
-
-            console.log(action);
-
-            axios.post(action).then(res => {
-                console.log(res.data);
-
-                if (res.data.success) {
-                    target.innerText = 'Remove section from schedule';
-                    target.dataset.registerType = 'unregister';
-                    target.disabled = false;
-                }
-            });
-            //
-            // this.$inertia.post(action, {
-            //     _token: this.$page.props.csrf_token
-            // });
+        capitalize(str) {
+            return _.capitalize(str);
         },
-        toggleRegisterButton(elem) {
-            elem.innerText = 'Unregister'
+        updateRegistrationBadge(section_id, course_id) {
+            if (this.studentRegistrationsMappings.coursesSections[course_id] === undefined) {
+                this.studentRegistrationsMappings.coursesSections[course_id] = [];
+            }
+
+            let index = this.studentRegistrationsMappings.coursesSections[course_id].indexOf(section_id);
+            if (index !== -1) {
+                this.studentRegistrationsMappings.coursesSections[course_id].splice(index, 1);
+            } else {
+                this.studentRegistrationsMappings.coursesSections[course_id].push(section_id);
+            }
+
+            if (this.studentRegistrationsMappings.courses[course_id] && this.studentRegistrationsMappings.coursesSections[course_id].length === 0) {
+                delete this.studentRegistrationsMappings.courses[course_id];
+            } else {
+                this.studentRegistrationsMappings.courses[course_id] = 'pending';
+            }
+
+            this.$forceUpdate();
         }
+    },
+    created() {
+        this.studentRegistrations.map(item => {
+            this.studentRegistrationsMappings.sections[item.course_section_id] = '';
+            this.studentRegistrationsMappings.courses[item.course_id] = item.status;
+
+            if (this.studentRegistrationsMappings.coursesSections[item.course_id] === undefined) {
+                this.studentRegistrationsMappings.coursesSections[item.course_id] = [];
+            }
+
+            this.studentRegistrationsMappings.coursesSections[item.course_id].push(item.course_section_id);
+        });
     }
 }
 </script>
 
 <style scoped>
 
+.course-pending {
+    background-color: #FCD34D;
+}
+
+.course-approved {
+    background-color: #10B981;
+}
+
+.course-denied {
+    background-color: #EF4444;
+}
 </style>
