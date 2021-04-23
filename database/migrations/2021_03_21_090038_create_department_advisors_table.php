@@ -14,8 +14,8 @@ class CreateDepartmentAdvisorsTable extends Migration
     public function up()
     {
         Schema::create('department_advisors', function (Blueprint $table) {
-            $table->unsignedInteger('department_id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('department_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->unique(['department_id', 'user_id']);
         });

@@ -15,13 +15,13 @@ class CreateCourseSectionSchedulesTable extends Migration
     {
         Schema::create('course_section_schedules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('course_section_id');
+            $table->unsignedBigInteger('course_section_id');
             $table->string('type')->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->string('days')->nullable();
             $table->boolean('is_online')->default(true);
-            $table->unsignedInteger('building_id')->nullable();
+            $table->unsignedBigInteger('building_id')->nullable();
             $table->string('room')->nullable();
             $table->timestamps();
         });

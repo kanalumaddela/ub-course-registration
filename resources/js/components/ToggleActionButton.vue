@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "ActionButton",
+    name: "ToggleActionButton",
     props: {
         action: {
             type: String,
@@ -72,6 +72,7 @@ export default {
     methods: {
         toggleCurrentState() {
             this.currentState = 1 - this.currentState;
+            this.$emit('state-changed');
         },
         doAction() {
             const method = this.actionMethod;
@@ -95,10 +96,9 @@ export default {
                     }
                 })
                 .catch(err => {
-                    console.error(err)
+                    this.$emit('error', err);
                 })
                 .finally(_ => {
-                    this.$emit('state-changed');
                     this.$el.disabled = false;
                 });
         }

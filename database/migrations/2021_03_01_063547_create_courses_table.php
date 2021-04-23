@@ -20,7 +20,7 @@ class CreateCoursesTable extends Migration
             $table->string('number');
             $table->text('description')->nullable();
             $table->unsignedTinyInteger('credits')->nullable();
-            $table->unsignedInteger('department_id');
+            $table->unsignedBigInteger('department_id');
             $table->timestamps();
         });
     }

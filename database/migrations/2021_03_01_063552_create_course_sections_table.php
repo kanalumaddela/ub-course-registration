@@ -20,9 +20,11 @@ class CreateCourseSectionsTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('faculty')->nullable();
-            $table->unsignedInteger('course_id');
-            $table->unsignedInteger('catalog_id');
+            $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('catalog_id');
             $table->timestamps();
+
+//            $table->unique(['number', 'course_id', 'catalog_id']);
         });
     }
 

@@ -2,6 +2,28 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-body {
-    overflow-y: scroll;
+/*body {*/
+/*    overflow-y: scroll;*/
+/*}*/
+.course-planned {
+    background-color: #bea1ff;
+}
+.course-pending {
+    background-color: #FCD34D;
+}
+.course-approved {
+    background-color: #10B981;
+}
+.course-denied {
+    background-color: #EF4444;
+}
+
+.button-group {
+    @apply flex;
+}
+.button-group > button:first-child {
+    @apply rounded-none rounded-tl-md rounded-bl-md rounded-tr-none rounded-br-none;
+}
+.button-group > button:last-child {
+    @apply rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md;
 }

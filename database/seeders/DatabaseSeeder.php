@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Notifications\TestNotification;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,17 +16,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        $this->call([
-            RolesPermissionsSeeder::class,
-            UBSampleDataSeeder::class,
-            StudentSeeder::class
-        ]);
-
-        User::create([
+        $user = User::create([
             'name' => 'kanalumaddela',
             'email' => 'spam@maddela.org',
             'password' => Hash::make('password'),
+        ]);
+
+        $user->notify(new TestNotification);
+
+        $this->call([
+            UBSampleDataSeeder::class,
+            RolesPermissionsSeeder::class,
+            StudentSeeder::class,
+            ConversationMessageSeeder::class
         ]);
     }
 }

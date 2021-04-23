@@ -15,12 +15,16 @@
             <!-- Footer -->
             <slot name="footer"></slot>
         </div>
+
+        <!-- Modal Portal -->
+        <portal-target multiple name="modal"></portal-target>
     </div>
 </template>
 
 <script>
 
 import Navigation from "@/components/Navigation";
+
 export default {
     name: "SiteLayout",
     components: {Navigation},
@@ -35,11 +39,6 @@ export default {
             this.$inertia.post(route('logout'));
         },
     },
-    mounted() {
-        if (this.$page.props.user.notifications) {
-            console.log(this.$page.props.user.notifications);
-        }
-    }
 }
 </script>
 

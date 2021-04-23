@@ -18,12 +18,12 @@ class StudentSeeder extends Seeder
             [
                 'user_id' => 1,
                 'course_section_id' => 1388,
-                'status' => 'pending',
+                'status' => 'planned',
             ],
             [
                 'user_id' => 1,
                 'course_section_id' => 1704,
-                'status' => 'pending',
+                'status' => 'planned',
             ],
         ]);
     }

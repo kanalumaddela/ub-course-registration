@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -59,15 +60,28 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'profile_photo_url_large',
     ];
+
+    public function getProfilePhotoUrlLargeAttribute()
+    {
+        return $this->profile_photo_path
+            ? Storage::disk($this->profilePhotoDisk())->url($this->profile_photo_path)
+            : $this->defaultProfilePhotoUrl(true);
+    }
+
+    protected function defaultProfilePhotoUrl($large = false)
+    {
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=fff&background=c4b5fd'.($large ? '&size=256' : '');
+    }
 
     public function registrations()
     {
         return $this->hasMany(StudentRegistration::class);
     }
 
-    public function schedules()
-    {
-        return $this->hasManyThrough(CourseSectionSchedule::class, StudentRegistration::class, 'user_id', 'id', 'ccccccccccc', 'course_section_id');
-    }
+//    public function schedules()
+//    {
+//        return $this->hasManyThrough(CourseSectionSchedule::class, StudentRegistration::class, 'user_id', 'id', 'ccccccccccc', 'course_section_id');
+//    }
 }
