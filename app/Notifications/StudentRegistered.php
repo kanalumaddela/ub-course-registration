@@ -70,7 +70,7 @@ class StudentRegistered extends Notification
     {
         return [
             'text' => $this->studentRegistration->student->name.' is waiting for approval to register for: '.$this->course->name_shorthand.'-'.$this->studentRegistration->courseSection->number,
-            'url' => route('advisor.registrations.student', $this->studentRegistration->student)
+            'url' => route('advisor.registrations.view', $this->studentRegistration->student),
         ];
     }
 }

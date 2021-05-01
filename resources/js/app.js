@@ -19,7 +19,7 @@ Vue.mixin({
             return (new Date(`January 1, 2021 ${time}`)).toLocaleTimeString('en-US');
         },
         hasRole(role) {
-            return this.$page?.props?.user?.is_super || this.$page?.props?.user?.roles.indexOf(role) !== -1;
+            return this.$page?.props?.user?.is_super || this.$page?.props?.user?.roles.indexOf(role) >= 0;
         }
     },
 })

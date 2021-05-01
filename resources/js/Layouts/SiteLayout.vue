@@ -1,6 +1,6 @@
 <template>
-    <div v-bind:class="{dark: darkMode}">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div>
+        <div class="min-h-screen">
             <!-- Navigation -->
             <navigation></navigation>
 

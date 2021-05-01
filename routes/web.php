@@ -23,7 +23,13 @@ use Illuminate\Support\Facades\Route;
 //});
 
 
+Route::get('/dashboard', function () {
+    return redirect()->route('index');
+})->name('dashboard');
+
 //Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//
+//
 //    return Inertia::render('Dashboard');
 //})->name('dashboard');
 
@@ -43,7 +49,7 @@ Route::get('/notification/{notification}', function (\Illuminate\Notifications\D
         $notification->markAsRead();
     }
 
-    if (isset($notification->data['url'])) {
+    if (isset($notification->data['url']) && !empty($notification->data['url'])) {
         return redirect($notification->data['url']);
     }
 
@@ -60,24 +66,28 @@ Route::post('/register-section/{courseSection}', [\App\Http\Controllers\Register
     ->middleware(['auth:sanctum', 'roleCustom:admin|student'])
     ->name('register.section');
 
-// catalog
-Route::get('/catalogs', [\App\Http\Controllers\CatalogController::class, 'index'])->name('catalogs.index');
-Route::get('/catalogs/{catalog}', [\App\Http\Controllers\CatalogController::class, 'view'])->name('catalogs.view');
-
 // courses
 Route::get('/courses', [\App\Http\Controllers\CourseController::class, 'index'])->name('courses.index');
 Route::get('/course/{course}', [\App\Http\Controllers\CourseController::class, 'view'])->name('courses.view');
 
+// user
+Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+Route::get('/user/{user}', [\App\Http\Controllers\UserController::class, 'view'])->name('users.view');
+
 // advisor
 Route::group(['prefix' => '/dashboard/advisor', 'as' => 'advisor.', 'middleware' => ['roleCustom:admin|advisor']], function () {
     Route::get('/', [\App\Http\Controllers\Advisor\RegistrationController::class, 'index'])->name('registrations');
-    Route::get('/departments/{department}', [\App\Http\Controllers\Advisor\RegistrationController::class, 'department'])->name('registrations.department');
-    Route::get('/registrations/{user}', [\App\Http\Controllers\Advisor\RegistrationController::class, 'department'])->name('registrations.student');
+    Route::get('/student-schedule/{student}', [\App\Http\Controllers\Advisor\RegistrationController::class, 'studentSchedule'])->name('students.schedule');
+    Route::post('/registration/{studentRegistration}', [\App\Http\Controllers\Advisor\RegistrationController::class, 'update'])->name('registrations.update');
+    Route::get('/registration/{student}', [\App\Http\Controllers\Advisor\RegistrationController::class, 'index'])->name('registrations.view');
 });
 
 
 // admin
-Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['role:admin']], function () {
+Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['roleCustom:admin']], function () {
+    Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
+    Route::get('/advisors', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('advisors');
+
     Route::resources([
         'catalogs' => \App\Http\Controllers\Admin\CatalogController::class,
         'courses' => \App\Http\Controllers\Admin\CourseController::class,

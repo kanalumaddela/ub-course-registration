@@ -6,6 +6,7 @@ use App\Models\Conversation;
 use App\Models\User;
 use App\Notifications\MessageReceived;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,11 +53,21 @@ class MessageController extends Controller
         $conversations = Conversation::with([
             'author',
             'recipient',
-            'messages' => function ($query) {
-                $query->orderBy('created_at')->orderBy('id', 'desc');
+            'latestMessage' => function (HasOne $query) {
+                $query->orderBy('created_at', 'desc')
+                    ->orderBy('id', 'desc');
             },
-        ])
-            ->where('conversations.author_id', $user_id)
+        ]);
+
+        if ($initialConvo) {
+            $conversations->with([
+                'messages' => function ($query) {
+                    $query->orderBy('created_at')->orderBy('id', 'asc');
+                }
+            ]);
+        }
+
+        $conversations = $conversations->where('conversations.author_id', $user_id)
             ->orWhere('conversations.recipient_id', $user_id)
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'desc')

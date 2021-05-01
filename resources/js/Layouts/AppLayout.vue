@@ -20,12 +20,6 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('test.courses')" :active="route().current('test.courses')">
-                                    Courses
-                                </jet-nav-link>
-                                <jet-nav-link :href="route('test.departments')" :active="route().current('test.departments')">
-                                    Departments
-                                </jet-nav-link>
                             </div>
                         </div>
 
@@ -240,14 +234,14 @@
 </template>
 
 <script>
-    import JetApplicationMark from '@/Jetstream/ApplicationMark'
-    import JetBanner from '@/Jetstream/Banner'
-    import JetDropdown from '@/Jetstream/Dropdown'
-    import JetDropdownLink from '@/Jetstream/DropdownLink'
-    import JetNavLink from '@/Jetstream/NavLink'
-    import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
+import JetApplicationMark from '@/Jetstream/ApplicationMark'
+import JetBanner from '@/Jetstream/Banner'
+import JetDropdown from '@/Jetstream/Dropdown'
+import JetDropdownLink from '@/Jetstream/DropdownLink'
+import JetNavLink from '@/Jetstream/NavLink'
+import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
 
-    export default {
+export default {
         components: {
             JetApplicationMark,
             JetBanner,

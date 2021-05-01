@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\BasicNotification;
 use App\Notifications\StudentRegistered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,21 +23,42 @@ class StudentRegistration extends Model
     protected static function boot()
     {
         static::updated(function (self $studentRegistration) {
-            if ($studentRegistration->status === 'pending') {
-                $advisors = User::select('users.*')
-                    ->join('department_advisors', 'department_advisors.user_id', '=', 'users.id')
-                    ->join('departments', 'departments.id', '=', 'department_advisors.department_id')
-                    ->join('courses', 'courses.department_id', '=', 'departments.id')
-                    ->join('course_sections', 'course_sections.course_id', '=', 'courses.id')
-                    ->leftJoin('student_registrations', 'student_registrations.course_section_id', '=', 'course_sections.id')
-                    ->where('student_registrations.id', $studentRegistration->id)
-                    ->get();
+            $approved = $studentRegistration->status === 'approved';
 
-                Notification::send($advisors, new StudentRegistered($studentRegistration));
+            switch ($studentRegistration->status) {
+                case 'approved':
+                case 'denied':
+                    $studentRegistration->load([
+                        'student',
+                        'courseSection.course'
+                    ]);
 
-                if (env('APP_ENV')) {
-                    User::find(1)->notify(new StudentRegistered($studentRegistration));
-                }
+                    $courseNameFull = $studentRegistration->courseSection->course->name_shorthand.'-'.$studentRegistration->courseSection->number;
+
+                    $studentRegistration->student->notify(new BasicNotification($approved ? 'You have been approved to register for: '.$courseNameFull : 'Your registration for: '.$courseNameFull.' has been denied'));
+
+                    break;
+                case 'pending':
+                    $advisors = User::select('users.*')
+                        ->join('department_advisors', 'department_advisors.user_id', '=', 'users.id')
+                        ->join('departments', 'departments.id', '=', 'department_advisors.department_id')
+                        ->join('courses', 'courses.department_id', '=', 'departments.id')
+                        ->join('course_sections', 'course_sections.course_id', '=', 'courses.id')
+                        ->leftJoin('student_registrations', 'student_registrations.course_section_id', '=', 'course_sections.id')
+                        ->where('student_registrations.id', $studentRegistration->id)
+                        ->get();
+                    $admins = User::role('admin')->get();
+
+                    $notification = new StudentRegistered($studentRegistration);
+
+
+                    Notification::send($advisors, $notification);
+                    Notification::send($admins, $notification);
+
+                    if (env('APP_ENV')) {
+                        User::find(1)->notify(new StudentRegistered($studentRegistration));
+                    }
+                    break;
             }
         });
 

@@ -5,7 +5,7 @@
 /*body {*/
 /*    overflow-y: scroll;*/
 /*}*/
-.course-planned {
+.course-registered {
     background-color: #bea1ff;
 }
 .course-pending {
@@ -16,6 +16,9 @@
 }
 .course-denied {
     background-color: #EF4444;
+}
+.course-planned {
+    background-color: #55abef;
 }
 
 .button-group {

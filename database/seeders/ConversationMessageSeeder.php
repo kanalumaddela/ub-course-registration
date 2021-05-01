@@ -17,12 +17,10 @@ class ConversationMessageSeeder extends Seeder
      */
     public function run()
     {
-        return;
-
         $faker = Factory::create();
 
         if (env('APP_SEED')) {
-            $users = User::inRandomOrder()->limit(30)->get();
+            $users = User::inRandomOrder()->limit(7)->get();
 
             foreach ($users as $i => $user) {
                 $author_id = $i % 2 ? 1 : $user->id;

@@ -1,7 +1,7 @@
 <template>
     <site-layout>
         <div class="py-12 max-w-screen-2xl mx-auto sm:px-6 lg:px-8">
-            <div v-if="$page.props.user" class="grid md:grid-cols-4 bg-white sm:rounded-md shadow">
+            <div v-if="$page.props.user" class="grid md:grid-cols-4 bg-white sm:rounded-md shadow" style="height: 50rem;">
                 <div class="col-span-1 sm:p-5 border-r sm:border-gray-300">
                     <div class="h-full overflow-auto">
                         <div v-if="!calendarOptions.events.length" class="h-full flex flex-col items-center justify-center">
@@ -18,12 +18,12 @@
                                     My Classes
                                 </h1>
                             </div>
-                            <div v-show="registrationList.length" class="mt-2 mb-6 text-center">
+                            <div v-show="registrationList.length" class="mt-2 mb-4 text-center">
                                 <inertia-link :href="route('studentRegistration.registerAll')" as="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 bg-purple-600 hover:bg-purple-500" method="post">
                                     Register for all
                                 </inertia-link>
                             </div>
-                            <div class="px-2">
+                            <div class="pt-4 pb-2 px-2 overflow-auto" style="max-height: 40.5rem">
                                 <div v-for="registration in registrationList" :key="`student-registration-${registration.user_id}-${registration.course_section_id}`" class="relative pt-4 pb-2 px-4 border border-gray-300 rounded mb-4">
                                     <inertia-link :href="route('courses.view', registration.course_section.course)" class="underline">
                                         <h1>{{ registration.course_section.course.name + `(${registration.course_section.course.name_shorthand + '-' + registration.course_section.number})` }}</h1>
@@ -32,24 +32,24 @@
                                         {{ registration.course_section.catalog.name_full }}
                                     </span>
                                     <p :class="`course-${registration.status}`" class="absolute -top-3 -right-2 py-0.5 px-2 rounded">{{ determineBadge(registration.status) }}</p>
-                                    <div class="mt-2 text-center button-group justify-center">
-                                        <jet-button v-if="registration.status === 'planned' || registration.status === 'approved'" type="button" @click.native="confirmModal($event, registration, 'register')">Register</jet-button>
-                                        <jet-button v-if="registration.status === 'pending'" type="button" @click.native="confirmModal($event, registration, 'cancel')">Cancel</jet-button>
+                                    <div class="mt-2 text-center flex justify-center">
+                                        <jet-button v-if="registration.status === 'planned' || registration.status === 'approved'" class="rounded-r-none" type="button" @click.native="confirmModal($event, registration, 'register')">Register</jet-button>
+                                        <jet-button v-if="registration.status === 'pending'" :class="{'rounded-r-none': registration.status !== 'approved'}" type="button" @click.native="confirmModal($event, registration, 'cancel')">Cancel</jet-button>
                                         <jet-danger-button v-if="registration.status === 'registered'" @click.native="confirmModal($event, registration, 'drop')">Drop</jet-danger-button>
-                                        <jet-danger-button v-if="registration.status !== 'registered'" @click.native="confirmModal($event, registration, 'remove')">Remove</jet-danger-button>
+                                        <jet-danger-button v-if="registration.status !== 'registered'" :class="{'rounded-l-none': registration.status !== 'registered' && registration.status !== 'denied'}" @click.native="confirmModal($event, registration, 'remove')">Remove</jet-danger-button>
                                     </div>
                                 </div>
                             </div>
                         </template>
                     </div>
                 </div>
-                <div class="col-span-3 sm:p-5">
-                    <FullCalendar :options="calendarOptions"></FullCalendar>
+                <div class="col-span-3 sm:p-5" style="height: 49rem">
+                    <FullCalendar :options="calendarOptions" class="h-full"></FullCalendar>
                 </div>
             </div>
 
             <div v-else class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <site-welcome/>
+                <site-welcome :courses-count="coursesCount" />
             </div>
         </div>
 
@@ -80,15 +80,13 @@ import SiteLayout from "@/Layouts/SiteLayout";
 import JetButton from "@/Jetstream/Button";
 import JetSecondaryButton from '@/Jetstream/SecondaryButton';
 import JetDangerButton from '@/Jetstream/DangerButton';
+import SiteWelcome from "@/components/SiteWelcome";
+import ConfirmationModal from "@/Jetstream/ConfirmationModal";
 
 import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid';
-import SiteWelcome from "@/components/SiteWelcome";
-import ConfirmationModal from "@/Jetstream/ConfirmationModal";
 
-
-// 'pending', 'approved', 'denied', 'planned', 'registered'
 
 const questionTemplate = (action, courseName) => `Are you sure you want to ${action} <span class="font-bold inline-block">${courseName}</span>?`;
 
@@ -107,7 +105,7 @@ const confirmationData = {
         formMethod: 'delete',
         title: 'Drop course',
         buttonText: 'Drop Course',
-        message: (action, courseName) => questionTemplate(action, courseName) + 'You will need advisor approval again if you re-register.',
+        message: (action, courseName) => questionTemplate(action, courseName) + ' You will need advisor approval again if you re-register.',
     },
     remove: {
         confirmation: true,
@@ -132,6 +130,10 @@ export default {
         schedules: {
             type: Array,
             default: () => []
+        },
+        coursesCount: {
+            type: Number,
+            default: 0
         },
         registrationList: Array,
         calendarMinTime: String,
@@ -208,19 +210,6 @@ export default {
             const method = confirmationData[this.registrationActionForm.action].formMethod ? confirmationData[this.registrationActionForm.action].formMethod : 'update';
             const formMethod = method !== 'delete' ? 'post' : 'delete';
 
-            // console.log(method);
-            //
-            // switch (method) {
-            //     case 'studentRegistration.delete':
-            //         break;
-            //     default:
-            //         this.registrationActionForm.post()
-            // }
-            //
-            // if (method === 'delete') {
-            //     this.registrationActionForm.delete()
-            // }
-
             this.registrationActionForm[formMethod](route('studentRegistration.' + method, this.studentRegistration.id), {
                 onSuccess: () => {
                     this.closeConfirmModal();
@@ -240,7 +229,7 @@ export default {
     },
     beforeUpdate() {
         this.updateCalendarOptions();
-    }
+    },
 }
 </script>
 

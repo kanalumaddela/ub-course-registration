@@ -56,14 +56,6 @@ class RolesPermissionsSeeder extends Seeder
             if (env('APP_SEED') && $data['count']) {
                 $users = User::factory()
                     ->count($data['count'])
-//                    ->has(
-//                        Conversation::factory()
-//                            ->for()
-//                            ->count(2)
-//                            ->has(
-//                                Message::factory()->count(7)
-//                            )
-//                    )
                     ->create();
 
                 if ($roleName === 'advisor') {

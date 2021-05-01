@@ -61,14 +61,17 @@ class IndexController
                 ])
                 ->join('course_sections', 'course_sections.id', '=', 'student_registrations.course_section_id')
                 ->join('courses', 'courses.id', '=', 'course_sections.course_id')
+                ->where('student_registrations.user_id', \auth()->id())
                 ->orderBy('courses.name')
                 ->get();
+        } else {
+            $coursesCount = DB::select('select count(*) as course_count from (select courses.id from courses join course_sections on course_sections.course_id = courses.id join course_section_schedules on course_section_schedules.course_section_id = course_sections.id join catalogs on course_sections.catalog_id = catalogs.id where catalogs.is_active = 1 GROUP by courses.id) as total')[0]->course_count;
         }
 
         return Inertia::render('Index', get_defined_vars());
     }
 
-    protected static function generateCalendarData($schedules)
+    public static function generateCalendarData($schedules)
     {
         $data = [];
         $counter = 1;
@@ -103,24 +106,7 @@ class IndexController
 //            $event['eventDisplay'] = 'background';
 
             $event['textColor'] = '#000';
-
-            switch ($schedule['status']) {
-                case 'planned':
-                    $event['backgroundColor'] = '#bea1ff';
-                    break;
-                case 'pending':
-                    $event['backgroundColor'] = '#fde68a';
-                    break;
-                case 'approved':
-                    $event['backgroundColor'] = '#F87171';
-                    break;
-                case 'denied':
-                    $event['backgroundColor'] = '#6EE7B7';
-                    break;
-                default:
-                    $event['backgroundColor'] = '#10B981'; // fcd34d
-                    break;
-            }
+            $event['backgroundColor'] = static::determineScheduleColor($schedule['status']);
 
             if (!empty($days)) {
                 foreach ($days as $day) {
@@ -136,8 +122,19 @@ class IndexController
         return $data;
     }
 
-    public function dashboard()
+    public static function determineScheduleColor($status)
     {
-
+        switch ($status) {
+            case 'planned':
+                return '#55abef';
+            case 'pending':
+                return '#fde68a';
+            case 'approved':
+                return '#10B981';
+            case 'denied':
+                return '#EF4444';
+            default:
+                return '#bea1ff';
+        }
     }
 }

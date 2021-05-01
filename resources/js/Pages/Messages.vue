@@ -23,7 +23,7 @@
                                 <label class="block font-medium text-sm text-gray-700">
                                     <span>Send To</span>
                                 </label>
-                                <v-select v-model="startConversationForm.user" :appendToBody="true" :clearable="false" :filterable="false" :options="userList" label="name" @search="queryForUsers">
+                                <v-select v-model="startConversationForm.user" :appendToBody="true" :clearable="false" :filterable="false" :options="userList" label="name" placeholder="Start typing to find a user..." @search="queryForUsers">
                                     <template #no-options="{ search, searching, loading }">
                                         <div class="py-2">
                                             <span v-show="!searching && !loading">Start typing to find a user</span>
@@ -82,7 +82,9 @@
                                 <img v-if="$page.props.jetstream.managesProfilePhotos" :alt="getRealMessagePartner(conversation).name" :src="getRealMessagePartner(conversation).profile_photo_url" class="mr-2 h-8 w-8 rounded-full object-cover" />
                                 <div class="flex-grow">
                                     <h1 :class="{'font-bold': activeConvo === conversation.id}">{{ getRealMessagePartner(conversation).name }}</h1>
-                                    <p class="text-sm text-gray-500">{{ truncate(conversation.messages[conversation.messages.length - 1].content) }}</p>
+                                    <p class="text-sm text-gray-500">
+                                        {{ truncate(conversation.latest_message.content) }}
+                                    </p>
                                     <div class="text-right text-xs text-gray-400">
                                         {{ luxonFormatFriendly(conversation.updated_at) }}
                                     </div>

@@ -42,9 +42,11 @@
                     <pagination class="shadow" :paginator="courses"></pagination>
                     <div class="grid gap-y-2">
                         <card v-for="course in courses.data" :key="'course-' + course.id" :data="course" classes="relative p-4 sm:rounded-md bg-white">
-                            <span v-if="studentRegistrationsMappings.courses[course.id]" class="absolute top-1.5 right-1.5 py-1 px-3 rounded shadow" :class="`course-${studentRegistrationsMappings.courses[course.id]}`">
-                                {{ capitalize(studentRegistrationsMappings.courses[course.id]) }}
-                            </span>
+                            <div v-if="studentRegistrationsMappings.courseExist[course.id]" class="flex absolute top-1.5 right-1.5">
+                                <div v-for="(status, course_section_id) in studentRegistrationsMappings.courses[course.id]" :class="`course-${status}`" class="py-1 px-3 rounded shadow mr-2.5">
+                                    {{ capitalize(status) }}
+                                </div>
+                            </div>
                             <div class="flex items-center">
                                 <div class="flex-grow">
                                     <h1 class="text-xl font-bold">
@@ -73,11 +75,16 @@
                                          v-for="section in course.sections" :key="'section-' + section.id">
                                         <div class="flex items-center px-1 py-2">
                                             <h5 class="flex-grow italic">
-                                                {{ course.name_shorthand + '-' + section.number }} -
-                                                {{ section.catalog.name_full }}</h5>
-<!--                                            <p>{{ studentRegistrationsMappings }}</p>-->
-                                            <template v-show="$page.props.user">
-                                                <toggle-action-button v-if="studentRegistrationsMappings.courses[section.course_id] !== 'pending' && studentRegistrationsMappings.courses[section.course_id] !== 'approved'"
+                                                {{ course.name_shorthand + '-' + section.number }} - {{ section.catalog.name_full }}
+                                                <span v-if="studentRegistrationsMappings.courseExist[section.course_id] && studentRegistrationsMappings.courses[section.course_id][section.id]" :class="`course-${studentRegistrationsMappings.courses[section.course_id][section.id]}`" class="not-italic py-1 px-3 rounded shadow ml-2.5">
+                                                    {{ capitalize(studentRegistrationsMappings.courses[section.course_id][section.id]) }}
+                                                </span>
+                                            </h5>
+                                            <template v-if="$page.props.user">
+                                                <inertia-link v-if="studentRegistrationsMappings.courseExist[section.course_id] && ['pending', 'approved', 'registered'].indexOf(studentRegistrationsMappings.courses[section.course_id][section.id]) !== -1" :href="route('index')">
+                                                    <jet-button>Drop from Dashboard</jet-button>
+                                                </inertia-link>
+                                                <toggle-action-button v-else
                                                                       :action="route('register.section', section.id)"
                                                                       :action-data="{sectionId: section.id}"
                                                                       :csrf="true"
@@ -90,10 +97,12 @@
                                                                       @error="registerError"
                                                                       @state-changed="updateRegistrationBadge(section.id, section.course_id)">
                                                 </toggle-action-button>
-                                                <inertia-link v-else :href="route('index')">
-                                                    <jet-button>Drop from Dashboard</jet-button>
-                                                </inertia-link>
                                             </template>
+                                            <inertia-link v-else :href="route('login')">
+                                                <jet-button>
+                                                    Login to Register
+                                                </jet-button>
+                                            </inertia-link>
                                         </div>
 
                                         <table class="min-w-full table-fixed text-center">
@@ -190,6 +199,7 @@ export default {
         return {
             studentRegistrationsMappings: {
                 courses: {},
+                courseExist: {},
                 sections: {},
                 coursesSections: {},
             }
@@ -228,23 +238,18 @@ export default {
         capitalize(str) {
             return _.capitalize(str);
         },
-        updateRegistrationBadge(section_id, course_id) {
-            if (this.studentRegistrationsMappings.coursesSections[course_id] === undefined) {
-                this.studentRegistrationsMappings.coursesSections[course_id] = [];
+        updateRegistrationBadge(course_section_id, course_id) {
+            if (this.studentRegistrationsMappings.courseExist[course_id] && this.studentRegistrationsMappings.courses[course_id][course_section_id]) {
+                delete this.studentRegistrationsMappings.courses[course_id][course_section_id];
+            } else {
+                if (!this.studentRegistrationsMappings.courses[course_id]) {
+                    this.studentRegistrationsMappings.courses[course_id] = {}
+                }
+
+                this.studentRegistrationsMappings.courses[course_id][course_section_id] = 'planned';
             }
 
-            let index = this.studentRegistrationsMappings.coursesSections[course_id].indexOf(section_id);
-            if (index !== -1) {
-                this.studentRegistrationsMappings.coursesSections[course_id].splice(index, 1);
-            } else {
-                this.studentRegistrationsMappings.coursesSections[course_id].push(section_id);
-            }
-
-            if (this.studentRegistrationsMappings.courses[course_id] && this.studentRegistrationsMappings.coursesSections[course_id].length === 0) {
-                delete this.studentRegistrationsMappings.courses[course_id];
-            } else {
-                this.studentRegistrationsMappings.courses[course_id] = 'planned';
-            }
+            this.studentRegistrationsMappings.courseExist[course_id] = Object.keys(this.studentRegistrationsMappings.courses[course_id]).length !== 0;
 
             this.$forceUpdate();
         },
@@ -255,13 +260,13 @@ export default {
     created() {
         this.studentRegistrations.map(item => {
             this.studentRegistrationsMappings.sections[item.course_section_id] = '';
-            this.studentRegistrationsMappings.courses[item.course_id] = item.status;
+            this.studentRegistrationsMappings.courseExist[item.course_id] = true;
 
-            if (this.studentRegistrationsMappings.coursesSections[item.course_id] === undefined) {
-                this.studentRegistrationsMappings.coursesSections[item.course_id] = [];
+            if (this.studentRegistrationsMappings.courses[item.course_id] === undefined) {
+                this.studentRegistrationsMappings.courses[item.course_id] = {};
             }
 
-            this.studentRegistrationsMappings.coursesSections[item.course_id].push(item.course_section_id);
+            this.studentRegistrationsMappings.courses[item.course_id][item.course_section_id] = item.status;
         });
     }
 }

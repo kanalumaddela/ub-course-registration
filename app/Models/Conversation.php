@@ -20,6 +20,11 @@ class Conversation extends Model
         return $this->hasMany(Message::class);
     }
 
+    public function latestMessage()
+    {
+        return $this->hasOne(Message::class);
+    }
+
     public function author()
     {
         return $this->belongsTo(User::class, );

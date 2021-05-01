@@ -20,14 +20,14 @@
                         <jet-nav-link :href="route('search')" :active="route().current('search')">
                             Search
                         </jet-nav-link>
-                        <jet-nav-link :href="route('catalogs.index')" :active="route().current('catalogs.index')">
-                            Catalogs
-                        </jet-nav-link>
 
                         <div v-show="hasRole('advisor')" class="h-full w-0.5 bg-white"></div>
 
-                        <jet-nav-link v-show="hasRole('advisor')" :active="route().current('advisor.registrations')" :href="route('advisor.registrations')">
-                            Manage Registrations
+                        <jet-nav-link v-show="hasRole('advisor')" :active="route().current().indexOf('advisor.') !== -1" :href="route('advisor.registrations')">
+                            Advisor
+                        </jet-nav-link>
+                        <jet-nav-link v-show="hasRole('admin')" :active="route().current('admin.index')" :href="route('admin.index')">
+                            Admin
                         </jet-nav-link>
                     </div>
                 </div>
@@ -77,11 +77,14 @@
 
                                     <div v-for="(item, index) in $page.props.user.notifications.all" :key="`notification-${item.id}`">
 
-                                        <div :class="{'font-bold': !item.read_at}" class="py-3 px-4">
-                                            <span v-if="!item.read_at" class="px-2 py-0.5 rounded bg-green-500 text-white">New</span>
-                                            <a :href="route('notifications.view', item.id)" class="hover:underline">
-                                                {{ item.data.text }}
-                                            </a>
+                                        <div :class="{'font-bold': !item.read_at}" class="py-3 px-4 flex items-center">
+                                            <span v-if="!item.read_at" class="px-2 py-0.5 mr-2 rounded bg-green-500 text-white">New</span>
+                                            <div>
+                                                <a :href="route('notifications.view', item.id)" class="hover:underline">
+                                                    {{ item.data.text }}
+                                                </a>
+                                                <div class="text-sm text-gray-300">{{ luxonFormatFriendly(item.created_at) }}</div>
+                                            </div>
                                         </div>
                                         <hr v-if="index < 4">
                                     </div>
@@ -149,6 +152,7 @@
 import JetNavLink from "@/Jetstream/NavLink";
 import JetDropdown from '@/Jetstream/Dropdown';
 import JetDropdownLink from '@/Jetstream/DropdownLink'
+import {DateTime} from "luxon";
 
 export default {
     name: "Navigation",
@@ -157,6 +161,11 @@ export default {
         JetDropdown,
         JetDropdownLink,
     },
+    methods: {
+        luxonFormatFriendly(timestamp) {
+            return DateTime.fromISO(timestamp).toRelative();
+        },
+    }
 }
 </script>
 
