@@ -30,7 +30,7 @@ class RolesPermissionsSeeder extends Seeder
                 'perms' => ['manage-registrations'],
             ],
             'student' => [
-                'count' => 500,
+                'count' => rand(425, 750),
                 'perms' => ['register-for-classes'],
             ],
         ];

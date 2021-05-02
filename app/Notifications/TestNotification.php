@@ -14,7 +14,7 @@ class TestNotification extends BaseNotification
     public function toArray($notifiable): array
     {
         return [
-            'url' => url('/'),
+            'url' => route('index'),
             'text' => 'This is a test notification',
         ];
     }

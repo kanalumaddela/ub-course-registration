@@ -1,7 +1,9 @@
 <template>
     <jet-authentication-card>
         <template #logo>
-            <div class="h-36 w-36 bg-purple-700 rounded-xl text-7xl font-black text-white text-center" style="line-height: 9rem;">UB</div>
+            <inertia-link :href="route('index')">
+                <div class="h-36 w-36 bg-purple-700 rounded-xl text-7xl font-black text-white text-center" style="line-height: 9rem;">UB</div>
+            </inertia-link>
         </template>
 
         <jet-validation-errors class="mb-4" />

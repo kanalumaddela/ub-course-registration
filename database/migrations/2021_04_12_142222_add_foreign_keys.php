@@ -14,46 +14,36 @@ class AddForeignKeys extends Migration
     public function up()
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->foreign('department_id')->references('id')->on('departments')
-                ->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->cascadeOnDelete();
         });
 
         Schema::table('course_sections', function (Blueprint $table) {
-            $table->foreign('course_id')->references('id')->on('courses');
-            $table->foreign('catalog_id')->references('id')->on('catalogs');
+            $table->foreign('course_id')->references('id')->on('courses')->cascadeOnDelete();
+            $table->foreign('catalog_id')->references('id')->on('catalogs')->cascadeOnDelete();
         });
         Schema::table('course_section_schedules', function (Blueprint $table) {
-            $table->foreign('course_section_id')->references('id')->on('course_sections')
-                ->onDelete('cascade');
+            $table->foreign('course_section_id')->references('id')->on('course_sections')->cascadeOnDelete();
             $table->foreign('building_id')->references('id')->on('buildings');
         });
 
         Schema::table('student_registrations', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onDelete('cascade');
-            $table->foreign('course_section_id')->references('id')->on('course_sections')
-                ->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('course_section_id')->references('id')->on('course_sections')->cascadeOnDelete();
         });
 
         Schema::table('department_advisors', function (Blueprint $table) {
-            $table->foreign('department_id')->references('id')->on('departments')
-                ->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::table('conversations', function (Blueprint $table) {
-            $table->foreign('author_id')->references('id')->on('users')
-                ->onDelete('cascade');
-            $table->foreign('recipient_id')->references('id')->on('users')
-                ->onDelete('cascade');
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('recipient_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::table('messages', function (Blueprint $table) {
-            $table->foreign('conversation_id')->references('id')->on('conversations')
-                ->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onDelete('cascade');
+            $table->foreign('conversation_id')->references('id')->on('conversations')->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 

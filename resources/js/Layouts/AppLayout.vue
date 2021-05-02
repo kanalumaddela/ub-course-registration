@@ -265,10 +265,6 @@ export default {
                     preserveState: false
                 })
             },
-
-            logout() {
-                this.$inertia.post(route('logout'));
-            },
         }
     }
 </script>

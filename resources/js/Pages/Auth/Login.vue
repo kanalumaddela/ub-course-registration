@@ -1,8 +1,17 @@
 <template>
     <jet-authentication-card>
         <template #logo>
-            <div class="h-36 w-36 bg-purple-700 rounded-xl text-7xl font-black text-white text-center" style="line-height: 9rem;">UB</div>
+            <inertia-link :href="route('index')">
+                <div class="h-36 w-36 bg-purple-700 rounded-xl text-7xl font-black text-white text-center" style="line-height: 9rem;">UB</div>
+            </inertia-link>
         </template>
+
+        <div v-if="$page.props.demo_mode" class="mb-2">
+            <h1>Select a type of user to login as:</h1>
+            <v-select :options="demoAccounts" label="type" @input="updateForm">
+
+            </v-select>
+        </div>
 
         <jet-validation-errors class="mb-4" />
 
@@ -49,6 +58,26 @@ import JetInput from '@/Jetstream/Input'
 import JetCheckbox from '@/Jetstream/Checkbox'
 import JetLabel from '@/Jetstream/Label'
 import JetValidationErrors from '@/Jetstream/ValidationErrors'
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+
+const demoAccounts = [
+    {
+        type: 'student',
+        email: 'student@bridgeport.edu',
+        password: 'student123',
+    },
+    {
+        type: 'advisor',
+        email: 'advisor@bridgeport.edu',
+        password: 'advisor123',
+    },
+    {
+        type: 'admin',
+        email: 'admin@bridgeport.edu',
+        password: 'admin123',
+    },
+]
 
 export default {
         components: {
@@ -58,7 +87,8 @@ export default {
             JetInput,
             JetCheckbox,
             JetLabel,
-            JetValidationErrors
+            JetValidationErrors,
+            vSelect
         },
 
         props: {
@@ -76,6 +106,12 @@ export default {
             }
         },
 
+        computed: {
+            demoAccounts() {
+                return this.$page.props.demo_mode ? demoAccounts : {};
+            }
+        },
+
         methods: {
             submit() {
                 this.form
@@ -86,6 +122,10 @@ export default {
                     .post(this.route('login'), {
                         onFinish: () => this.form.reset('password'),
                     })
+            },
+            updateForm(val) {
+                this.form.email = val ? val.email : null;
+                this.form.password = val ? val.password : null;
             }
         }
     }

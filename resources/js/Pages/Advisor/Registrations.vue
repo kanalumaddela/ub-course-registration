@@ -72,6 +72,7 @@
                                                 <span :class="`course-${registration.status}`" class="px-2 py-0.5 rounded">
                                                     {{ registration.status }}
                                                 </span>
+                                                <p>{{ luxonFormatFriendly(registration.created_at) }}</p>
                                             </div>
                                             <div class="grid gap-y-1">
                                                 <jet-button class="bg-green-600 hover:bg-green-500" @click.native="confirmRegistrationAction(registration, 'approve')">Approve</jet-button>
@@ -147,6 +148,8 @@ import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import DialogModal from "@/Jetstream/DialogModal";
+import {DateTime} from "luxon";
+import {Inertia} from '@inertiajs/inertia';
 
 const dayMappings = {
     'SU': 0,
@@ -213,6 +216,7 @@ export default {
             activeStudent: {
                 id: 0,
             },
+            fullCalendarInstance: null,
         }
     },
     mounted() {
@@ -222,11 +226,32 @@ export default {
         if (this.forceActiveStudent) {
             this.activeStudent = this.forceActiveStudent;
         }
+
+        Inertia.on('success', () => {
+            this.activeStudent = this.forceActiveStudent;
+        });
     },
     methods: {
+        luxonFormatFriendly(timestamp) {
+            return DateTime.fromISO(timestamp).toRelative();
+        },
+        prepCalendar(options) {
+            let event = options.events[0];
+            if (event.extendedProps?.start_date) {
+                this.fullCalendarInstance.gotoDate(event.extendedProps.start_date);
+                setTimeout(() => {
+                    this.fullCalendarInstance.render();
+                }, 10);
+            }
+        },
         getStudentSchedule(student_id) {
+            if (this.$refs.fullCalendar !== undefined && !this.fullCalendarInstance) {
+                this.fullCalendarInstance = this.$refs.fullCalendar.getApi();
+            }
+
             if (student_id === this.activeStudent.id && this.calendarOptionsCache['student-' + student_id]) {
                 this.calendarOptions = this.calendarOptionsCache['student-' + student_id];
+                this.prepCalendar(this.calendarOptions);
                 this.showCalendar = true;
                 return;
             }
@@ -246,12 +271,17 @@ export default {
                     }
                 }
 
+                if (data.dates) {
+                    options.events[0].extendedProps = data.dates;
+                }
+
                 if (data.minTime) {
                     options.slotMinTime = data.minTime;
                     options.slotMaxTime = data.maxTime;
                 }
 
                 this.calendarOptions = options;
+                this.prepCalendar(this.calendarOptions);
 
                 this.calendarOptionsCache['student-' + student_id] = this.calendarOptions;
                 this.showCalendar = true;

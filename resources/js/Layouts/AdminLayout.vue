@@ -1,6 +1,6 @@
 <template>
     <site-layout>
-        <div class="grid grid-cols-8" style="height: calc(100vh - 64px)">
+        <div class="grid grid-cols-8" style="min-height: calc(100vh - 64px)">
             <!-- sidenav -->
             <div class="col-span-1 border-r border-gray-300 bg-white">
                 <admin-navigation />

@@ -86,12 +86,22 @@ Route::group(['prefix' => '/dashboard/advisor', 'as' => 'advisor.', 'middleware'
 // admin
 Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['roleCustom:admin']], function () {
     Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
-    Route::get('/advisors', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('advisors');
+
+    Route::get('/users', [\App\Http\Controllers\Admin\AdvisorController::class, 'index'])->name('users');
+    Route::post('/users/{user}', [\App\Http\Controllers\Admin\AdvisorController::class, 'update'])->name('users.update');
+    Route::get('/users/{user}', [\App\Http\Controllers\Admin\AdvisorController::class, 'index'])->name('users.view');
+
+    Route::get('/advisors', [\App\Http\Controllers\Admin\AdvisorController::class, 'index'])->name('advisors');
+    Route::post('/advisors/create', [\App\Http\Controllers\Admin\AdvisorController::class, 'create'])->name('advisors.create');
+    Route::post('/advisor/{user}', [\App\Http\Controllers\Admin\AdvisorController::class, 'update'])->name('advisors.update');
+    Route::get('/advisor/{user}', [\App\Http\Controllers\Admin\AdvisorController::class, 'view'])->name('advisors.view');
+    Route::delete('/advisor/{user}', [\App\Http\Controllers\Admin\AdvisorController::class, 'delete'])->name('advisors.delete');
 
     Route::resources([
-        'catalogs' => \App\Http\Controllers\Admin\CatalogController::class,
-        'courses' => \App\Http\Controllers\Admin\CourseController::class,
-        'sections' => \App\Http\Controllers\Admin\SectionController::class,
+        'catalogs'    => \App\Http\Controllers\Admin\CatalogController::class,
+        'departments' => \App\Http\Controllers\Admin\DepartmentController::class,
+        'courses'     => \App\Http\Controllers\Admin\CourseController::class,
+        'sections'    => \App\Http\Controllers\Admin\SectionController::class,
     ]);
 });
 
@@ -108,9 +118,12 @@ Route::group(['prefix' => '/messages', 'middleware' => 'auth:sanctum'], function
 });
 
 
-
 Route::group(['prefix' => '/test'], function () {
     Route::get('/send-notification', function () {
         auth()->user()->notify(new \App\Notifications\TestNotification);
+    });
+
+    Route::get('/catalogs', function () {
+        dd(\App\Models\Catalog::with('courseSections')->limit(5)->get());
     });
 });

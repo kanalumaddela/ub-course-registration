@@ -1,7 +1,20 @@
 <template>
     <site-layout>
         <div class="py-12 max-w-screen-2xl mx-auto sm:px-6 lg:px-8">
-            <div v-if="$page.props.user" class="grid md:grid-cols-4 bg-white sm:rounded-md shadow" style="height: 50rem;">
+            <inertia-link v-if="hasRole('admin')" :href="route('admin.index')">
+                <div class="p-4 mb-2 text-white bg-indigo-500 rounded-md shadow flex items-center">
+                    Vist the Admin dashboard
+                    <svg class="ml-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                </div>
+            </inertia-link>
+            <inertia-link v-if="hasRole('advisor')" :href="route('advisor.registrations')">
+                <div class="p-4 mb-4 bg-yellow-500 rounded-md shadow flex items-center">
+                    Vist the Advisor dashboard
+                    <svg class="ml-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                </div>
+            </inertia-link>
+
+            <div v-if="$page.props.user && registrationList" class="grid md:grid-cols-4 bg-white sm:rounded-md shadow" style="height: 50rem;">
                 <div class="col-span-1 sm:p-5 border-r sm:border-gray-300">
                     <div class="h-full overflow-auto">
                         <div v-if="!calendarOptions.events.length" class="h-full flex flex-col items-center justify-center">

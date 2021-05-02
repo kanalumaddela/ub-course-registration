@@ -71,7 +71,7 @@ class SearchController
         $relations['sections'] = function ($query) {
             $query
                 ->select('course_sections.*')
-                ->selectRaw('(select count(user_id) from student_registrations where student_registrations.course_section_id = course_sections.id and student_registrations.status in (?) ) as seats_left', ['approved'])
+                ->selectRaw('(select count(user_id) from student_registrations where student_registrations.course_section_id = course_sections.id and student_registrations.status in (?, ?) ) as seats_left', ['approved', 'registered'])
                 ->join('courses', 'courses.id', '=', 'course_sections.course_id')
                 ->join('catalogs', 'catalogs.id', '=', 'course_sections.catalog_id')
                 ->where(function ($query) {
@@ -86,6 +86,11 @@ class SearchController
                 call_user_func_array([$query, $where[0]], [$where[1], $where[2]]);
             }
         });
+
+        if ($search = $request->query('query')) {
+            $coursesQuery->where('courses.name', 'LIKE', '%'.$search.'%')
+                ->orWhere('courses.name_shorthand', 'LIKE', '%'.$search.'%');
+        }
 
         $courses = $coursesQuery->paginate(static::RESULTS_PER_PAGE)->withQueryString();
         $courses->load($relations);

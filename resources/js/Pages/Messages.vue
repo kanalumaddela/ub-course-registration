@@ -86,7 +86,7 @@
                                         {{ truncate(conversation.latest_message.content) }}
                                     </p>
                                     <div class="text-right text-xs text-gray-400">
-                                        {{ luxonFormatFriendly(conversation.updated_at) }}
+                                        {{ luxonFormatFriendly(conversation.latest_message.created_at) }}
                                     </div>
                                 </div>
                             </div>
@@ -141,14 +141,14 @@ import JetLabel from "@/Jetstream/Label";
 import JetInput from '@/Jetstream/Input';
 import JetInputError from '@/Jetstream/InputError';
 import JetSecondaryButton from '@/Jetstream/SecondaryButton';
-import SelectList from "@/components/forms/SelectList";
+// import SelectList from "@/components/forms/SelectList";
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 
 export default {
     name: "Messages",
     components: {
-        SelectList,
+        // SelectList,
         Label,
         Button,
         Modal,

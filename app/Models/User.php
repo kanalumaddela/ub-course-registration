@@ -80,8 +80,8 @@ class User extends Authenticatable
         return $this->hasMany(StudentRegistration::class);
     }
 
-//    public function schedules()
-//    {
-//        return $this->hasManyThrough(CourseSectionSchedule::class, StudentRegistration::class, 'user_id', 'id', 'ccccccccccc', 'course_section_id');
-//    }
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class, 'department_advisors');
+    }
 }

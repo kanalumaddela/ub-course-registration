@@ -63,7 +63,7 @@ class MessageController extends Controller
             $conversations->with([
                 'messages' => function ($query) {
                     $query->orderBy('created_at')->orderBy('id', 'asc');
-                }
+                },
             ]);
         }
 
@@ -79,20 +79,20 @@ class MessageController extends Controller
     public function create(Request $request)
     {
 
-        $request->validate([
-            'user_id' =>  'required|exists:users,id'.'|unique:conversations,recipient_id,null,null,author_id,'.auth()->id(),
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id'.'|unique:conversations,recipient_id,null,null,author_id,'.auth()->id(),
             'content' => 'required',
         ]);
 
 
         $conversation = Conversation::create([
-            'author_id' => auth()->id(),
-            'recipient_id' => $request->input('user_id'),
+            'author_id'    => auth()->id(),
+            'recipient_id' => $validated['user_id'],
         ]);
 
         $conversation->messages()->create([
             'user_id' => auth()->id(),
-            'content' => $request->input('content'),
+            'content' => $validated['content'],
         ]);
 
         return redirect()->route('messages.index', $conversation);
@@ -100,13 +100,13 @@ class MessageController extends Controller
 
     public function reply(Conversation $conversation, Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'message' => 'required',
         ]);
 
         $conversation->messages()->create([
             'user_id' => auth()->id(),
-            'content' => $request->input('message')
+            'content' => $validated['message'],
         ]);
 
         $conversation->recipient->notify(new MessageReceived($conversation, auth()->user()));

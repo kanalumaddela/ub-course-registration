@@ -26,7 +26,7 @@
                         <jet-nav-link v-show="hasRole('advisor')" :active="route().current().indexOf('advisor.') !== -1" :href="route('advisor.registrations')">
                             Advisor
                         </jet-nav-link>
-                        <jet-nav-link v-show="hasRole('admin')" :active="route().current('admin.index')" :href="route('admin.index')">
+                        <jet-nav-link v-show="hasRole('admin')" :active="route().current().indexOf('admin.') !== -1" :href="route('admin.index')">
                             Admin
                         </jet-nav-link>
                     </div>
@@ -164,6 +164,9 @@ export default {
     methods: {
         luxonFormatFriendly(timestamp) {
             return DateTime.fromISO(timestamp).toRelative();
+        },
+        logout() {
+            this.$inertia.post(route('logout'));
         },
     }
 }

@@ -16,15 +16,7 @@ class RegistrationController
 {
     public function index($user_id = null)
     {
-        $students = User::with([
-            'registrations' => function($query) {
-                $query->whereIn('student_registrations.status', ['planned', 'pending']);
-            },
-            'registrations.courseSection.catalog',
-            'registrations.courseSection.schedule',
-            'registrations.courseSection.course.department',
-        ])
-            ->select('users.*')
+        $students = User::select('users.*')
             ->join('student_registrations', 'student_registrations.user_id', '=', 'users.id')
             ->whereIn('student_registrations.status', ['planned', 'pending'])
             ->groupBy('users.id');
@@ -43,7 +35,34 @@ class RegistrationController
                 ->join('departments', 'departments.id', '=', 'courses.department_id')
                 ->join('department_advisors', 'department_advisors.department_id', '=', 'departments.id')
                 ->where('department_advisors.user_id', auth()->id());
+
+            $students->with([
+                'registrations' => function($query) {
+                    $query
+                        ->select('student_registrations.*')
+                        ->join('course_sections', 'course_sections.id', '=', 'student_registrations.course_section_id')
+                        ->join('courses', 'courses.id', '=', 'course_sections.course_id')
+                        ->join('departments', 'departments.id', '=', 'courses.department_id')
+                        ->join('department_advisors', 'department_advisors.department_id', '=', 'departments.id')
+                        ->whereIn('student_registrations.status', ['planned', 'pending'])
+                        ->where('department_advisors.user_id', auth()->id());
+                },
+                'registrations.courseSection.catalog',
+                'registrations.courseSection.schedule',
+                'registrations.courseSection.course.department',
+            ]);
+        } else {
+            $students->with([
+                'registrations' => function ($query) {
+                    $query->whereIn('student_registrations.status', ['planned', 'pending']);
+                },
+                'registrations.courseSection.catalog',
+                'registrations.courseSection.schedule',
+                'registrations.courseSection.course.department',
+            ]);
         }
+
+//        $students->orderBy('student_registrations.created_at');
 
         $students = $students->paginate(20);
 
@@ -59,7 +78,7 @@ class RegistrationController
     {
         $student = $user;
         $student->load([
-            'registrations' => function($query) {
+            'registrations' => function ($query) {
                 $query->whereIn('student_registrations.status', ['planned', 'pending']);
             },
             'registrations.courseSection.catalog',
@@ -99,6 +118,16 @@ class RegistrationController
             ->where('student_registrations.user_id', $student_id)
             ->groupBy('student_registrations.user_id')
             ->first();
+
+        $minMaxDates = DB::select('select min(course_sections.start_date) as min_date, min(course_sections.end_date) as max_date from `course_section_schedules`
+inner join `course_sections` on `course_sections`.`id` = `course_section_schedules`.`course_section_id`
+inner join `student_registrations` on `student_registrations`.`course_section_id` = `course_sections`.`id`
+where `student_registrations`.`user_id` = ?
+group by `student_registrations`.`user_id` limit 1', [$student_id]);
+
+        if (!empty($minMaxDates)) {
+            $minMaxDates = $minMaxDates[0];
+        }
 
         $mappings = [
             'SU' => 0,
@@ -150,16 +179,20 @@ class RegistrationController
             'minTime'   => $minMax->min_time ?? null,
             'maxTime'   => $minMax->max_time ?? null,
             'events'    => $events,
+            'dates'     => [
+                'start_date' => $minMaxDates->min_date ?? null,
+                'end_date'   => $minMaxDates->max_date ?? null,
+            ],
         ];
     }
 
     public function update(StudentRegistration $studentRegistration, Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'action' => 'required|in:approve,deny',
         ]);
 
-        $studentRegistration->status = $request->input('action') === 'approve' ? 'approved' : 'denied';
+        $studentRegistration->status = $validated['action'] === 'approve' ? 'approved' : 'denied';
         $studentRegistration->save();
 
         return redirect()->back();

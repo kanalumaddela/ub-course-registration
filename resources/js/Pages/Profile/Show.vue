@@ -1,11 +1,5 @@
 <template>
-    <app-layout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Profile
-            </h2>
-        </template>
-
+    <site-layout>
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <div v-if="$page.props.jetstream.canUpdateProfileInformation">
@@ -35,22 +29,24 @@
                 </template>
             </div>
         </div>
-    </app-layout>
+    </site-layout>
 </template>
 
 <script>
-    import AppLayout from '@/Layouts/AppLayout'
-    import DeleteUserForm from './DeleteUserForm'
-    import JetSectionBorder from '@/Jetstream/SectionBorder'
-    import LogoutOtherBrowserSessionsForm from './LogoutOtherBrowserSessionsForm'
-    import TwoFactorAuthenticationForm from './TwoFactorAuthenticationForm'
-    import UpdatePasswordForm from './UpdatePasswordForm'
-    import UpdateProfileInformationForm from './UpdateProfileInformationForm'
+import AppLayout from '@/Layouts/AppLayout'
+import DeleteUserForm from './DeleteUserForm'
+import JetSectionBorder from '@/Jetstream/SectionBorder'
+import LogoutOtherBrowserSessionsForm from './LogoutOtherBrowserSessionsForm'
+import TwoFactorAuthenticationForm from './TwoFactorAuthenticationForm'
+import UpdatePasswordForm from './UpdatePasswordForm'
+import UpdateProfileInformationForm from './UpdateProfileInformationForm'
+import SiteLayout from "@/Layouts/SiteLayout";
 
-    export default {
+export default {
         props: ['sessions'],
 
         components: {
+            SiteLayout,
             AppLayout,
             DeleteUserForm,
             JetSectionBorder,

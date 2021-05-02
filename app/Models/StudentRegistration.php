@@ -12,8 +12,6 @@ class StudentRegistration extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     protected $fillable = [
         'user_id',
         'course_section_id',
@@ -35,7 +33,7 @@ class StudentRegistration extends Model
 
                     $courseNameFull = $studentRegistration->courseSection->course->name_shorthand.'-'.$studentRegistration->courseSection->number;
 
-                    $studentRegistration->student->notify(new BasicNotification($approved ? 'You have been approved to register for: '.$courseNameFull : 'Your registration for: '.$courseNameFull.' has been denied'));
+                    $studentRegistration->student->notify(new BasicNotification($approved ? 'You have been approved to register for: '.$courseNameFull : 'Your registration for: '.$courseNameFull.' has been denied', route('index')));
 
                     break;
                 case 'pending':

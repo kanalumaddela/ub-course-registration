@@ -18,6 +18,7 @@ class CreateStudentRegistrationsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('course_section_id');
             $table->enum('status', ['pending', 'approved', 'denied', 'planned', 'registered']);
+            $table->timestamps();
 
             $table->unique(['user_id', 'course_section_id']);
         });

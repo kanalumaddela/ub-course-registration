@@ -44,6 +44,8 @@ class HandleInertiaRequests extends Middleware
     {
         $data = [];
 
+        $data['csrf_token'] = csrf_token();
+
         if (auth()->check()) {
             $user_id = auth()->id();
 
@@ -87,6 +89,8 @@ class HandleInertiaRequests extends Middleware
 
             unset($user_id);
         }
+
+        $data['demo_mode'] = env('DEMO_MODE', false);
 
         return array_merge(parent::share($request), $data);
     }

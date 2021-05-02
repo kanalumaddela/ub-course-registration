@@ -49,13 +49,12 @@ class RegisterController extends Controller
         // approved -> drop
         // denied -> remove
 
-        $request->validate([
+        $validated = $request->validate([
             'action' => 'required|in:register,cancel',
         ]);
 
-        $action = $request->input('action');
 
-        switch ($action) {
+        switch ($validated['action']) {
             case 'cancel':
                 $studentRegistration->update([
                     'status' => 'planned',

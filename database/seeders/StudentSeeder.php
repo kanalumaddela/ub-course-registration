@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,6 +15,8 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Factory::create();
+
         DB::table('student_registrations')->insert([
             [
                 'user_id'           => 1,
@@ -42,8 +45,8 @@ class StudentSeeder extends Seeder
             ->select('course_sections.id')
             ->join('catalogs', 'catalogs.id', '=', 'course_sections.catalog_id')
             ->join('course_section_schedules', 'course_section_schedules.course_section_id', '=', 'course_sections.id')
-
             ->where('catalogs.is_active', 1)
+            ->whereNotIn('course_sections.course_id', [86, 109, 108])
             ->whereIn('catalogs.semester', ['spring', 'summer'])
             ->whereRaw('course_sections.end_date > CURDATE()')
             ->groupBy('course_sections.id')
@@ -52,15 +55,11 @@ class StudentSeeder extends Seeder
             ->toArray();
 
         $inserts = [];
-        $hashCheck  = [];
+        $hashCheck = [];
 
         $status = ['pending', 'approved', 'denied', 'planned', 'registered'];
 
         foreach ($users as $id) {
-//            if ($id === 1) {
-//                continue;
-//            }
-
             foreach (array_fill(0, rand(2, 6), '') as $tmp) {
 
                 $section_id = $sections[array_rand($sections)];
@@ -78,6 +77,7 @@ class StudentSeeder extends Seeder
                     'user_id'           => $id,
                     'course_section_id' => $section_id,
                     'status'            => $status_type,
+                    'created_at'        => $faker->dateTimeThisYear(),
                 ];
             }
         }

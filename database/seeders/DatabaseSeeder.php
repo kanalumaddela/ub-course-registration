@@ -27,8 +27,17 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UBSampleDataSeeder::class,
             RolesPermissionsSeeder::class,
-            StudentSeeder::class,
-            ConversationMessageSeeder::class
         ]);
+
+        if (env('APP_SEED')) {
+            $this->call([
+                StudentSeeder::class,
+                ConversationMessageSeeder::class
+            ]);
+        }
+
+        if (env('DEMO_MODE', false)) {
+            $this->call(DemoSeeder::class);
+        }
     }
 }

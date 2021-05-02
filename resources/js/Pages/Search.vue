@@ -39,7 +39,18 @@
                     </div>
                 </div>
                 <div class="col-span-full lg:col-span-3">
+                    <div class="w-full p-2 mb-2 bg-white rounded-md shadow">
+                        <form :action="route('search')" class="flex items-center" method="get">
+                            <jet-input :value="search" class="w-full mr-2" name="query" placeholder="Enter a course to search for" type="text" />
+                            <jet-button>
+                                <svg class="h-4 w-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                                Search
+                            </jet-button>
+                        </form>
+                    </div>
+
                     <pagination class="shadow" :paginator="courses"></pagination>
+
                     <div class="grid gap-y-2">
                         <card v-for="course in courses.data" :key="'course-' + course.id" :data="course" classes="relative p-4 sm:rounded-md bg-white">
                             <div v-if="studentRegistrationsMappings.courseExist[course.id]" class="flex absolute top-1.5 right-1.5">

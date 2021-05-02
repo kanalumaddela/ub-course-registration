@@ -9,6 +9,7 @@ use DateInterval;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use PDO;
 
@@ -18,9 +19,7 @@ class IndexController
 
     public function index()
     {
-        if (Auth::check()) {
-            // todo: authorize()
-
+        if (Auth::check() && Gate::allows('register-for-classes')) {
             $sql = 'select concat(courses.name_shorthand, \'-\', course_sections.number) as course_name_full, course_section_schedules.days, course_section_schedules.type, course_section_schedules.start_time, course_section_schedules.end_time, student_registrations.status, course_sections.start_date as term_start, course_sections.end_date as term_end, student_registrations.status from courses join course_sections on course_sections.course_id = courses.id join course_section_schedules on course_section_schedules.course_section_id = course_sections.id join student_registrations on student_registrations.course_section_id = course_sections.id join catalogs on catalogs.id = course_sections.catalog_id where student_registrations.user_id = ?';
             $min_max_time_sql = 'select addtime(min(course_section_schedules.start_time), \'-2:00:00\') as min_time, addtime(max(course_section_schedules.end_time), \'2:00:00\') as max_time from courses join course_sections on course_sections.course_id = courses.id join course_section_schedules on course_section_schedules.course_section_id = course_sections.id join student_registrations on student_registrations.course_section_id = course_sections.id join catalogs on catalogs.id = course_sections.catalog_id where student_registrations.user_id = ? GROUP by student_registrations.user_id';
 
