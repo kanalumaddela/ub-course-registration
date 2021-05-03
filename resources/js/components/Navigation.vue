@@ -20,13 +20,18 @@
                         <jet-nav-link :href="route('search')" :active="route().current('search')">
                             Search
                         </jet-nav-link>
+                        <jet-nav-link :active="route().current().indexOf('users.') !== -1" :href="route('users.index')">
+                            User Directory
+                        </jet-nav-link>
 
                         <div v-show="hasRole('advisor')" class="h-full w-0.5 bg-white"></div>
 
-                        <jet-nav-link v-show="hasRole('advisor')" :active="route().current().indexOf('advisor.') !== -1" :href="route('advisor.registrations')">
+                        <jet-nav-link v-show="hasRole('advisor')" :active="route().current().indexOf('advisor.') !== -1"
+                                      :href="route('advisor.registrations')">
                             Advisor
                         </jet-nav-link>
-                        <jet-nav-link v-show="hasRole('admin')" :active="route().current().indexOf('admin.') !== -1" :href="route('admin.index')">
+                        <jet-nav-link v-show="hasRole('admin')" :active="route().current().indexOf('admin.') !== -1"
+                                      :href="route('admin.index')">
                             Admin
                         </jet-nav-link>
                     </div>

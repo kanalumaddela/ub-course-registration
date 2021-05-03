@@ -42,8 +42,12 @@ Route::get('/courses', [\App\Http\Controllers\CourseController::class, 'index'])
 Route::get('/course/{course}', [\App\Http\Controllers\CourseController::class, 'view'])->name('courses.view');
 
 // user
-Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-Route::get('/user/{user}', [\App\Http\Controllers\UserController::class, 'view'])->name('users.view');
+Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])
+    ->middleware(['auth:sanctum', 'roleCustom:admin|advisor|student'])
+    ->name('users.index');
+Route::get('/user/{user}', [\App\Http\Controllers\UserController::class, 'view'])
+    ->middleware(['auth:sanctum', 'roleCustom:admin|advisor|student'])
+    ->name('users.view');
 
 // advisor
 Route::group(['prefix' => '/dashboard/advisor', 'as' => 'advisor.', 'middleware' => ['roleCustom:admin|advisor']], function () {
@@ -57,10 +61,11 @@ Route::group(['prefix' => '/dashboard/advisor', 'as' => 'advisor.', 'middleware'
 // admin
 Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['roleCustom:admin']], function () {
     Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
+    Route::post('/messageAll', [\App\Http\Controllers\Admin\IndexController::class, 'messageAll'])->name('messageAll');
 
-    Route::get('/users', [\App\Http\Controllers\Admin\AdvisorController::class, 'index'])->name('users');
-    Route::post('/users/{user}', [\App\Http\Controllers\Admin\AdvisorController::class, 'update'])->name('users.update');
-    Route::get('/users/{user}', [\App\Http\Controllers\Admin\AdvisorController::class, 'index'])->name('users.view');
+//    Route::get('/users', [\App\Http\Controllers\Admin\AdvisorController::class, 'index'])->name('users');
+//    Route::post('/users/{user}', [\App\Http\Controllers\Admin\AdvisorController::class, 'update'])->name('users.update');
+//    Route::get('/users/{user}', [\App\Http\Controllers\Admin\AdvisorController::class, 'index'])->name('users.view');
 
     Route::get('/advisors', [\App\Http\Controllers\Admin\AdvisorController::class, 'index'])->name('advisors');
     Route::post('/advisors/create', [\App\Http\Controllers\Admin\AdvisorController::class, 'create'])->name('advisors.create');

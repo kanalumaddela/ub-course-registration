@@ -44,14 +44,48 @@
                         <h2 class="font-light text-gray-400">Average per department</h2>
                     </div>
 
-                    <svg class="h-16 w-16 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                    <svg class="h-16 w-16 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    </svg>
+                </div>
+
+                <div class="col-span-full my-3">
+                    <div class="p-4 bg-white rounded-md shadow">
+                        <h1 class="flex items-center text-lg font-medium mb-2">
+                            <svg class="h-6 w-6 mr-2 text-gray-600" fill="none" stroke="currentColor"
+                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            </svg>
+                            Send a message to all students
+                        </h1>
+                        <hr>
+                        <form :action="route('admin.messageAll')" method="post">
+                            <input :value="$page.props.csrf_token" name="_token" type="hidden">
+                            <div class="flex items-center mt-2">
+                                <jet-input class="flex-grow mr-4" name="message" type="text"/>
+                                <jet-button>
+                                    Send
+                                </jet-button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="col-span-full">
                     <div class="grid grid-cols-3 grid-rows-2 gap-3">
                         <div class="col-span-2 p-4 row-span-1 row-start-1 bg-white rounded shadow">
                             <h1 class="uppercase font-bold mb-2 flex items-center">
-                                <svg class="h-6 w-6 mr-1 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                                <svg class="h-6 w-6 mr-1 text-gray-600" fill="none" stroke="currentColor"
+                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                </svg>
                                 Students
                             </h1>
 
@@ -112,6 +146,8 @@ import AdminLayout from "@/Layouts/AdminLayout";
 import PieChart from "@/components/charts/PieChart";
 import LineChart from "@/components/charts/LineChart";
 import BarChart from "@/components/charts/BarChart";
+import JetInput from '@/Jetstream/Input';
+import JetButton from "@/Jetstream/Button";
 
 const pieChartColors = [
     '#00876c',
@@ -148,6 +184,8 @@ export default {
         PieChart,
         LineChart,
         BarChart,
+        JetInput,
+        JetButton,
     },
     props: {
         registrations: Object,

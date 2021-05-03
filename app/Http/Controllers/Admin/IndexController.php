@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\BasicNotification;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Inertia\Inertia;
 
 class IndexController extends Controller
@@ -134,8 +137,14 @@ order by departments.name');
         return DB::table('student_registrations');
     }
 
-    public function advisor()
+    public function messageAll(Request $request)
     {
+        $validated = $request->validate([
+            'message' => 'required',
+        ]);
 
+        Notification::send(User::role('student')->get(), new BasicNotification('Message from Admin: '.$validated['message']));
+
+        return redirect()->route('admin.index');
     }
 }
