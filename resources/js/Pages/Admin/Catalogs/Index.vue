@@ -12,15 +12,16 @@
                 <inertia-link v-for="catalog in catalogs.data" :key="`catalog-${catalog.id}`" :href="route('admin.catalogs.show', catalog)" class="col-span-1 p-4 bg-white rounded-md shadow">
                     <div class="flex items-center justify-between">
                         {{ catalog.name_full }}
-                        <span :class="catalog.is_active ? 'bg-green-300' : 'bg-red-300'" class="px-2 rounded-3xl">{{ catalog.is_active ? 'Active' : 'Inactive' }}</span>
+                        <span :class="catalog.is_active ? 'bg-green-600' : 'bg-red-600'"
+                              class="px-2 py-1 text-sm rounded-3xl text-white">{{
+                                catalog.is_active ? 'Active' : 'Inactive'
+                            }}</span>
                     </div>
                     <div class="text-sm text-gray-500">
                         {{ catalog.semester }}
                     </div>
                 </inertia-link>
             </div>
-
-            <pagination :paginator="catalogs" class="shadow" />
         </div>
     </admin-layout>
 </template>

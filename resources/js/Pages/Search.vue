@@ -130,7 +130,12 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="border-t border-r border-gray-400" rowspan="0">
-                                                        {{ section.seats_left }} / {{ section.seats }}
+                                                        <template v-if="section.seats">
+                                                            {{ section.seats_taken }} / {{ section.seats }}
+                                                        </template>
+                                                        <template v-else>
+                                                            {{ section.seats_taken }}
+                                                        </template>
                                                     </td>
                                                     <td class="border-l border-gray-400" rowspan="0">
                                                         {{
@@ -204,7 +209,8 @@ export default {
         courses: Object,
         coursesCounts: Object,
         studentRegistrations: Array,
-        filterCheckboxes: Object
+        filterCheckboxes: Object,
+        search: String,
     },
     data() {
         return {

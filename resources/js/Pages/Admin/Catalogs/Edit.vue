@@ -12,6 +12,12 @@
             </inertia-link>
         </div>
 
+        <div class="text-center">
+            <h1 class="text-2xl uppercase font-black mb-2">
+                {{ catalog.name_full }}
+            </h1>
+        </div>
+
         <div class="mt-4 max-w-sm mx-auto p-4 bg-white rounded-md shadow">
             <form :action="route('admin.catalogs.update', catalog)" method="post">
                 <input name="_method" type="hidden" value="PUT">

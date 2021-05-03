@@ -14,81 +14,80 @@
 
         <div class="col-span-full text-center">
             <h1 class="text-2xl uppercase font-black mb-2">
-                {{ section.course.name_shorthand }}-{{ section.number }} - {{ section.catalog.name_full }}
+                Editing schedule for: {{ section.course.name_shorthand }}-{{ section.number }} -
+                {{ section.catalog.name_full }}
             </h1>
         </div>
 
         <div class="mt-4 max-w-xl mx-auto p-4 bg-white rounded-md shadow">
-            <form :action="route('admin.sections.update', section)" method="post">
+            <form :action="route('admin.schedules.update', [section, schedule])" method="post">
                 <input name="_method" type="hidden" value="PUT">
                 <input :value="$page.props.csrf_token" name="_token" type="hidden">
                 <table class="w-full">
                     <tbody>
                         <tr>
-                            <td class="p-2 font-bold">Number</td>
+                            <td class="p-2 font-bold">ID</td>
                             <td class="p-2">
-                                <jet-input v-model="form.number" name="number" placeholder="11, 3A, etc..."
+                                {{ schedule.id }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 font-bold">
+                                Online
+                            </td>
+                            <td class="p-2">
+                                <jet-checkbox v-model="form.is_online" name="is_online" value="1"/>
+                                <input-error :message="$page.props.errors.is_online"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 font-bold">Type</td>
+                            <td class="p-2">
+                                <jet-input v-model="form.type" name="type" placeholder="Online, Lecture..."
                                            type="text"/>
-                                <input-error :message="$page.props.errors.number"/>
+                                <input-error :message="$page.props.errors.type"/>
                             </td>
                         </tr>
                         <tr>
-                            <td class="p-2 font-bold">Seats</td>
+                            <td class="p-2 font-bold">Start Time</td>
                             <td class="p-2">
-                                <jet-input v-model="form.seats" name="seats" type="number"/>
-                                <input-error :message="$page.props.errors.seats"/>
+                                <jet-input v-model="form.start_time" name="start_time" type="time"/>
                             </td>
                         </tr>
                         <tr>
-                            <td class="p-2 font-bold">Start Date</td>
+                            <td class="p-2 font-bold">End Time</td>
                             <td class="p-2">
-                                <jet-input v-model="form.start_date" name="start_date" type="date"/>
-                                <input-error :message="$page.props.errors.start_date"/>
+                                <jet-input v-model="form.end_time" name="end_time" type="time"/>
                             </td>
                         </tr>
                         <tr>
-                            <td class="p-2 font-bold">End Date</td>
+                            <td class="p-2 font-bold">Days</td>
                             <td class="p-2">
-                                <jet-input v-model="form.end_date" name="end_date" type="date"/>
-                                <input-error :message="$page.props.errors.end_date"/>
+                                <jet-input v-model="form.days" name="days" type="hidden"/>
+                                <v-select v-model="form.days" :multiple="true" :options="days"
+                                          :reduce="day => day.letter"
+                                          label="day"/>
                             </td>
                         </tr>
                         <tr>
-                            <td class="p-2 font-bold">Faculty</td>
+                            <td class="p-2 font-bold">Building</td>
                             <td class="p-2">
-                                <jet-input v-model="form.faculty" name="faculty" type="text"/>
-                                <input-error :message="$page.props.errors.faculty"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="p-2 font-bold">Course</td>
-                            <td class="p-2">
-                                <input v-model="form.course_id" name="course_id" type="hidden">
-                                <v-select v-model="form.course_id" :options="courses" :reduce="course => course.id"
-                                          label="name">
+                                <jet-input v-model="form.building_id" name="building_id" type="hidden"/>
+                                <v-select v-model="form.building_id" :options="buildings"
+                                          :reduce="building => building.id" label="name">
                                     <template v-slot:option="option">
-                                        <div class="break-words">
-                                            {{ option.name }}
-                                        </div>
-                                        <div class="text-sm text-gray-500">
-                                            {{ option.name_shorthand }}
-                                        </div>
+                                        {{ option.name }}
                                     </template>
                                 </v-select>
-                                <input-error :message="$page.props.errors.course_id"/>
+                                <input-error :message="$page.props.errors.building_id"/>
                             </td>
                         </tr>
                         <tr>
-                            <td class="p-2 font-bold">Catalog</td>
+                            <td class="p-2 font-bold">Room</td>
                             <td class="p-2">
-                                <input v-model="form.catalog_id" name="catalog_id" type="hidden">
-                                <v-select v-model="form.catalog_id" :options="catalogs" :reduce="catalog => catalog.id"
-                                          label="name_full">
-                                    <template v-slot:option="option">
-                                        {{ option.name_full }}
-                                    </template>
-                                </v-select>
-                                <input-error :message="$page.props.errors.catalog_id"/>
+                                <jet-input v-model="form.room" name="room" placeholder="203A, etc."
+                                           type="text"/>
+                                <input-error :message="$page.props.errors.room"/>
                             </td>
                         </tr>
                     </tbody>
@@ -134,20 +133,29 @@ export default {
     },
     props: {
         section: Object,
-        courses: Array,
-        catalogs: Array,
+        schedule: Object,
+        buildings: Array,
     },
     data() {
         return {
+            days: [
+                {letter: 'M', day: 'Monday'},
+                {letter: 'T', day: 'Tuesday'},
+                {letter: 'W', day: 'Wednesday'},
+                {letter: 'TH', day: 'Thursday'},
+                {letter: 'F', day: 'Friday'},
+                {letter: 'S', day: 'Saturday'},
+                {letter: 'SU', day: 'Sunday'},
+            ],
             form: this.$inertia.form({
-                number: this.section.number,
-                seats: this.section.seats,
-                start_date: this.section.start_date,
-                end_date: this.section.end_date,
-                faculty: this.section.faculty,
-                course_id: this.section.course_id,
-                catalog_id: this.section.catalog_id,
-            })
+                is_online: Boolean(this.schedule.is_online),
+                type: this.schedule.type,
+                start_time: this.schedule.start_time,
+                end_time: this.schedule.end_time,
+                days: this.schedule.days.split(' '),
+                room: this.schedule.room,
+                building_id: this.schedule.building_id,
+            }),
         }
     },
 }

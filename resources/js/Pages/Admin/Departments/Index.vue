@@ -18,8 +18,6 @@
                     </div>
                 </inertia-link>
             </div>
-
-            <pagination :paginator="departments" class="shadow" />
         </div>
     </admin-layout>
 </template>

@@ -12,6 +12,12 @@
             </inertia-link>
         </div>
 
+        <div class="text-center">
+            <h1 class="text-2xl uppercase font-black mb-2">
+                {{ course.name }} - {{ course.name_shorthand }}
+            </h1>
+        </div>
+
         <div class="mt-4 max-w-xl mx-auto p-4 bg-white rounded-md shadow">
             <form :action="route('admin.courses.update', course)" method="post">
                 <input name="_method" type="hidden" value="PUT">

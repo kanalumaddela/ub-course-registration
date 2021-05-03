@@ -11,10 +11,13 @@ class CourseSectionSchedule extends Model
 
     protected $fillable = [
         'course_section_id',
-        'days',
+        'type',
         'start_time',
-        'duration',
-        'location',
+        'end_time',
+        'days',
+        'is_online',
+        'building_id',
+        'room',
     ];
 
     public function building()

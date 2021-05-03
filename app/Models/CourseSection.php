@@ -10,9 +10,13 @@ class CourseSection extends Model
     use HasFactory;
 
     protected $fillable = [
+        'number',
+        'seats',
+        'start_date',
+        'end_date',
+        'faculty',
         'course_id',
-        'section',
-        'details',
+        'catalog_id',
     ];
 
     public function course()

@@ -71,7 +71,7 @@ class SearchController
         $relations['sections'] = function ($query) {
             $query
                 ->select('course_sections.*')
-                ->selectRaw('(select count(user_id) from student_registrations where student_registrations.course_section_id = course_sections.id and student_registrations.status in (?, ?) ) as seats_left', ['approved', 'registered'])
+                ->selectRaw('(select count(user_id) from student_registrations where student_registrations.course_section_id = course_sections.id and student_registrations.status in (?, ?) ) as seats_taken', ['approved', 'registered'])
                 ->join('courses', 'courses.id', '=', 'course_sections.course_id')
                 ->join('catalogs', 'catalogs.id', '=', 'course_sections.catalog_id')
                 ->where(function ($query) {
@@ -131,16 +131,6 @@ class SearchController
         return Course::select('courses.*')
             ->with([
                 'department',
-//                'sections.catalog',
-//                'sections.schedule' => function ($query) {
-//                    $query
-//                        ->select('course_section_schedules.*')
-//                        ->selectRaw('course_sections.seats - (select count(user_id) from student_registrations where student_registrations.course_section_id = course_sections.id and student_registrations.status = ? ) as seats_left', ['approved'])
-//                        ->join('course_sections', 'course_sections.id', '=', 'course_section_schedules.course_section_id')
-//                        ->join('catalogs', 'course_sections.catalog_id', '=', 'catalogs.id')
-//                        ->where('catalogs.is_active', true);
-//                },
-//                'sections.schedule.building',
             ])
             ->join('course_sections', 'courses.id', '=', 'course_sections.course_id')
             ->join('course_section_schedules', 'course_sections.id', '=', 'course_section_schedules.course_section_id')

@@ -1,10 +1,21 @@
 <template>
     <admin-layout>
         <div class="mt-4 max-w-screen-2xl mx-auto">
-            <inertia-link :href="route('admin.catalogs.index')" class="flex items-center text-purple-700 hover:underline">
-                <svg class="h-6 w-6 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 17l-5-5m0 0l5-5m-5 5h12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+            <inertia-link :href="route('admin.catalogs.index')"
+                          class="flex items-center text-purple-700 hover:underline">
+                <svg class="h-6 w-6 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11 17l-5-5m0 0l5-5m-5 5h12" stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="2"/>
+                </svg>
                 Back to Results
             </inertia-link>
+        </div>
+
+        <div class="text-center">
+            <h1 class="text-2xl uppercase font-black mb-2">
+                Create a Catalog
+            </h1>
         </div>
 
         <div class="mt-4 max-w-sm mx-auto p-4 bg-white rounded-md shadow">

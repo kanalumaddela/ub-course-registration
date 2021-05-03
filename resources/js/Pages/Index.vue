@@ -8,9 +8,13 @@
                 </div>
             </inertia-link>
             <inertia-link v-if="hasRole('advisor')" :href="route('advisor.registrations')">
-                <div class="p-4 mb-4 bg-yellow-500 rounded-md shadow flex items-center">
+                <div class="p-4 mb-4 bg-pink-500 text-white rounded-md shadow flex items-center">
                     Vist the Advisor dashboard
-                    <svg class="ml-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                    <svg class="ml-2 h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="2"/>
+                    </svg>
                 </div>
             </inertia-link>
 

@@ -13,28 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return Inertia::render('Welcome', [
-//        'canLogin'       => Route::has('login'),
-//        'canRegister'    => Route::has('register'),
-//        'laravelVersion' => Application::VERSION,
-//        'phpVersion'     => PHP_VERSION,
-//    ]);
-//});
-
-
-Route::get('/dashboard', function () {
-    return redirect()->route('index');
-})->name('dashboard');
-
-//Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//
-//
-//    return Inertia::render('Dashboard');
-//})->name('dashboard');
-
 // new dashboard
 Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
+Route::get('/dashboard', [\App\Http\Controllers\IndexController::class, 'dashboard'])->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'roleCustom:admin|student'])->group(function () {
     Route::post('/register-all', [\App\Http\Controllers\RegisterController::class, 'registerAll'])->name('studentRegistration.registerAll');
@@ -44,17 +25,7 @@ Route::middleware(['auth:sanctum', 'roleCustom:admin|student'])->group(function 
 
 // notifications
 Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
-Route::get('/notification/{notification}', function (\Illuminate\Notifications\DatabaseNotification $notification) {
-    if ($notification->unread()) {
-        $notification->markAsRead();
-    }
-
-    if (isset($notification->data['url']) && !empty($notification->data['url'])) {
-        return redirect($notification->data['url']);
-    }
-
-    return redirect()->back();
-})->name('notifications.view');
+Route::get('/notification/{notification}', [\App\Http\Controllers\NotificationController::class, 'view'])->name('notifications.view');
 Route::post('/notifications/clear-all', [\App\Http\Controllers\NotificationController::class, 'clearAll'])->name('notifications.clearAll');
 Route::post('/notifications/mark-all-read', [\App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('notifications.markAllRead');
 
@@ -103,6 +74,12 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => ['roleCust
         'courses'     => \App\Http\Controllers\Admin\CourseController::class,
         'sections'    => \App\Http\Controllers\Admin\SectionController::class,
     ]);
+
+    Route::get('/sections/{section}/schedules/create', [\App\Http\Controllers\Admin\SectionController::class, 'scheduleCreate'])->name('schedules.create');
+    Route::post('/sections/{section}/schedules', [\App\Http\Controllers\Admin\SectionController::class, 'scheduleStore'])->name('schedules.store');
+    Route::put('/sections/{section}/schedules/{schedule}', [\App\Http\Controllers\Admin\SectionController::class, 'scheduleUpdate'])->name('schedules.update');
+    Route::get('/sections/{section}/schedules/{schedule}/edit', [\App\Http\Controllers\Admin\SectionController::class, 'scheduleEdit'])->name('schedules.edit');
+    Route::delete('/sections/{section}/schedules/{schedule}', [\App\Http\Controllers\Admin\SectionController::class, 'scheduleDelete'])->name('schedules.delete');
 });
 
 // messages
@@ -115,15 +92,4 @@ Route::group(['prefix' => '/messages', 'middleware' => 'auth:sanctum'], function
         ->name('messages.reply');
     Route::get('/{conversation?}', [\App\Http\Controllers\MessageController::class, 'index'])
         ->name('messages.index');
-});
-
-
-Route::group(['prefix' => '/test'], function () {
-    Route::get('/send-notification', function () {
-        auth()->user()->notify(new \App\Notifications\TestNotification);
-    });
-
-    Route::get('/catalogs', function () {
-        dd(\App\Models\Catalog::with('courseSections')->limit(5)->get());
-    });
 });

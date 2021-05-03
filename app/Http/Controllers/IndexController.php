@@ -17,6 +17,11 @@ class IndexController
 {
     protected static $hasOnlineClasses = false;
 
+    public function dashboard()
+    {
+        return redirect()->action([static::class, 'index']);
+    }
+
     public function index()
     {
         if (Auth::check() && Gate::allows('register-for-classes')) {

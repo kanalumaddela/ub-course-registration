@@ -32,7 +32,7 @@ class DemoSeeder extends Seeder
         ]);
         $advisor->assignRole('advisor');
         DB::table('department_advisors')->insert([
-            'department_id' => 1,
+            'department_id' => 45,
             'user_id'       => $advisor->id,
         ]);
 
