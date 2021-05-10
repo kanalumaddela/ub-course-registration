@@ -215,6 +215,7 @@ export default {
             registrationActionModal: null,
             activeStudent: {
                 id: 0,
+                name: null,
             },
             fullCalendarInstance: null,
         }
@@ -228,7 +229,9 @@ export default {
         }
 
         Inertia.on('success', () => {
-            this.activeStudent = this.forceActiveStudent;
+            if (this.forceActiveStudent) {
+                this.activeStudent = this.forceActiveStudent;
+            }
         });
     },
     methods: {
@@ -297,6 +300,7 @@ export default {
         },
         closeConfirmModal() {
             this.isPerformingRegistrationAction = false;
+
             setTimeout(() => {
                 this.registrationActionForm.reset();
             }, 500);

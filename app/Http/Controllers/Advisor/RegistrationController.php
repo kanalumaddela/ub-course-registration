@@ -66,10 +66,7 @@ class RegistrationController
 
         $students = $students->paginate(20);
 
-        if (count($students) > 0) {
-            $forceActiveStudent = $students[0];
-        }
-
+        $forceActiveStudent = count($students) > 0 ? $students[0] : null;
 
         return Inertia::render('Advisor/Registrations', get_defined_vars());
     }
@@ -195,6 +192,6 @@ group by `student_registrations`.`user_id` limit 1', [$student_id]);
         $studentRegistration->status = $validated['action'] === 'approve' ? 'approved' : 'denied';
         $studentRegistration->save();
 
-        return redirect()->back();
+        return redirect()->route('advisor.registrations');
     }
 }
